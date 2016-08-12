@@ -1,4 +1,5 @@
 package com.example.mayank.travelagentproject;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -45,15 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
         Snackbar.make(coordinatorLayout, "Welcome, You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setElevation((float) 6.000);
-                Snackbar.make(view, "Welcome, You Logged In As Guest.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Snackbar.make(coordinatorLayout, "Welcome, You Logged In As Guest.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -77,9 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setHasFixedSize(true);
         adapter=new ModeAdapter(list,this);
         recyclerView.setAdapter(adapter);
-
         }
 
+    //******
+    // onCreate ends..
+    //******
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -13,7 +13,7 @@
         <item
             android:id="@+id/linking"
             android:icon="@drawable/link"
-            android:title="Cities Linked" />
+            android:title="Linked States and Cities" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

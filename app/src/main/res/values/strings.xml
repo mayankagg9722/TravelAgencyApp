@@ -32,21 +32,32 @@
 
 
         <item>Telangana</item>
+        <item>Hyderabad</item>
+        <item>Warangal</item>
+        <item>Adilabad</item>
+        <item>Alampur</item>
+        <item>Ankapur</item>
+        <item>Bhadrachalam</item>
+        <item>Nalgonda</item>
+        <item>Nirmal</item>
+        <item>Nizamabad</item>
+        <item>Khammam</item>
+
+
         <item>Tamil Nadu</item>
         <item>Chennai </item>
         <item>Coimbatore</item>
         <item>Hyderabad</item>
         <item>Madurai</item>
         <item>Pondicherry</item>
-         <item>Kodaikanal</item>
+        <item>Vellore</item>
+        <item>Kodaikanal</item>
         <item>Ooty</item>
         <item>Erode</item>
         <item>Kanchipuram</item>
         <item>Rameswaram</item>
-
     </string-array>
 </resources>
-
 
 
 

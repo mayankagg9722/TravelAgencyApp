@@ -42,13 +42,6 @@ public class Modedislpay extends AppCompatActivity {
         autoCompleteTextView.setAdapter(cityadapter);
         autoCompleteTextView.setDropDownBackgroundResource(R.color.droplist);
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),"You have Selected "+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_LONG).show();
-            }
-        });
-
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +62,12 @@ public class Modedislpay extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "We are not currently avilable at "+autoCompleteTextView.getText().toString()+".",
+                        Toast.makeText(getApplicationContext(), "Sorry!..We are not currently available here.",
                                 Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
-
-
 
 
     }
