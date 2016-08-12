@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardviewmode"
+        app:cardUseCompatPadding="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:cardPreventCornerOverlap="true"
+        app:cardElevation="25dp"
+        app:cardBackgroundColor="#00FFFFFF">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal|center_vertical"
+            >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/newrailway"
+        android:id="@+id/modeimage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="Railways"
+        android:textColor="#ffffff"
+        android:textSize="40dp"
+        android:typeface="serif"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textStyle="bold|italic"
+        android:textAllCaps="true"
+        android:id="@+id/modetext">
+    </TextView>
+
+<!--        <android.support.design.widget.VisibilityAwareImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/forward"
+            android:src="@drawable/forwardcard"
+            android:layout_gravity="right|bottom"/>
+
+
+        <android.support.design.widget.VisibilityAwareImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/infocard"
+            android:src="@drawable/infocard"
+            android:layout_gravity="left|bottom"/>
+-->
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

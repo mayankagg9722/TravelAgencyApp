@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">TravelAgentProject</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="cityarray">
+
+        <item>Andhra Pradesh</item>
+        <item>Amaravathi</item>
+        <item>Anantapur</item>
+        <item>Guntur</item>
+        <item>Kurnool</item>
+        <item>Nellore</item>
+        <item>Tirupati</item>
+        <item>Vijayawada</item>
+        <item>Visakhapatnam</item>
+
+
+        <item>Karnataka</item>
+        <item>Bangalore </item>
+        <item>Manglore</item>
+        <item>Mysore</item>
+
+        <item>Kerala</item>
+        <item>Thiruvananthapuram</item>
+        <item> Kochi</item>
+        <item>Kannur</item>
+        <item>Kollam</item>
+
+
+        <item>Telangana</item>
+        <item>Tamil Nadu</item>
+        <item>Chennai </item>
+        <item>Coimbatore</item>
+        <item>Hyderabad</item>
+        <item>Madurai</item>
+        <item>Pondicherry</item>
+         <item>Kodaikanal</item>
+        <item>Ooty</item>
+        <item>Erode</item>
+        <item>Kanchipuram</item>
+        <item>Rameswaram</item>
+
+    </string-array>
+</resources>
+
+
+
+
+
