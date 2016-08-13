@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.linking) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.booking) {
 
         } else if (id == R.id.nav_share) {
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         autoCompleteTextView.setDropDownBackgroundResource(R.color.droplist);
         autoCompleteTextView.setHint("Enter city..");
         autoCompleteTextView.setHintTextColor(Color.parseColor("#000000"));
-        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,
                 getResources().getStringArray(R.array.cityarray)));
 
         alertBuilder.setView(autoCompleteTextView);

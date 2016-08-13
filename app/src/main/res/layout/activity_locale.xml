@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mayank.travelagentproject.Locale"
+    android:background="@drawable/back">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select Place"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:id="@+id/selectmodetext"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/myactionbarcolor"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/selectmodetext"
+        android:id="@+id/view"></View>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="From"
+        android:textSize="20dp"
+        android:textColorHint="#000000"
+        android:id="@+id/fromlocal"
+        android:textColor="#000000"
+        android:layout_below="@+id/view"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="75dp"
+        android:layout_toStartOf="@+id/getlocation" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Destination"
+        android:textSize="15dp"
+        android:textStyle="italic"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:id="@+id/pickbutton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/namepicked"
+        android:textColor="#000000"
+        android:hint="Name Picked"
+        android:textSize="20dp"
+        android:textColorHint="#000000"
+        android:layout_above="@+id/addresspicked"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addresspicked"
+        android:hint="Address Picked"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textColorHint="#000000"
+        android:layout_above="@+id/donetwo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/donetwo"
+        android:src="@drawable/donetwo"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:layout_marginBottom="30dp"
+        android:background="#00FFFFFF"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Location"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
+        android:background="#000000"
+        android:id="@+id/getlocation"
+        android:layout_alignTop="@+id/fromlocal"
+        android:layout_toEndOf="@+id/selectmodetext" />
+
+
+</RelativeLayout>

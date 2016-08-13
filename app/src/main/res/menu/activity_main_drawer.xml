@@ -15,9 +15,9 @@
             android:icon="@drawable/link"
             android:title="Linked States and Cities" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+            android:id="@+id/booking"
+            android:icon="@drawable/booking"
+            android:title="Your Bookings" />
     </group>
 
     <item android:title="Communicate">

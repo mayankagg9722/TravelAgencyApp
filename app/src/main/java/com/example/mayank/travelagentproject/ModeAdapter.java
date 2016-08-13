@@ -60,16 +60,21 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> 
         }
         @Override
         public void onClick(View view) {
-            int position=getAdapterPosition();
-            ModeTransport modeTransport=this.list.get(position);
+            int position = getAdapterPosition();
+            ModeTransport modeTransport = this.list.get(position);
 
-            if(start) {
-                Intent intent = new Intent(ctx, Modedislpay.class);
-                intent.putExtra("mode",modeTransport.getName());
+            if(modeTransport.getName().equals("Locale")) {
+                Intent intent = new Intent(ctx, Locale.class);
                 ctx.startActivity(intent);
             }
             else {
-                Toast.makeText(ctx, "Please Enter Location first on top ..", Toast.LENGTH_SHORT).show();
+                if (start) {
+                    Intent intent = new Intent(ctx, Modedislpay.class);
+                    intent.putExtra("mode", modeTransport.getName());
+                    ctx.startActivity(intent);
+                } else {
+                    Toast.makeText(ctx, "Please Enter Location first on top ..", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

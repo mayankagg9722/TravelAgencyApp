@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="com.example.mayank.travelagentproject.Modedislpay"
-android:background="@drawable/newback">
+android:background="@drawable/back">
 
 
     <TextView
@@ -48,8 +48,8 @@ android:background="@drawable/newback">
         android:textAppearance="?android:textAppearanceLarge"
         android:hint="From"
         android:textSize="25dp"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:id="@+id/autoCompleteTextViewfrom"
         android:textStyle="italic|bold"
         android:completionThreshold="2"
@@ -57,17 +57,17 @@ android:background="@drawable/newback">
         android:layout_marginBottom="20dp"
         android:layout_above="@+id/autoCompleteTextView"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toStartOf="@+id/getbutton" />
 <AutoCompleteTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:singleLine="true"
     android:inputType="text"
     android:maxLines="1"
-    android:textColorHint="#ffffff"
+    android:textColorHint="#000000"
     android:hint="To"
     android:textSize="25dp"
-    android:textColor="#ffffff"
+    android:textColor="#000000"
     android:textAppearance="?android:textAppearanceLarge"
     android:textStyle="italic|bold"
     android:id="@+id/autoCompleteTextView"
@@ -85,6 +85,19 @@ android:background="@drawable/newback">
     android:background="#00FFFFFF"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Location"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
+        android:background="#000000"
+        android:id="@+id/getbutton"
+        android:layout_alignBottom="@+id/autoCompleteTextViewfrom"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/autoCompleteTextViewfrom" />
 
 
 </RelativeLayout>
