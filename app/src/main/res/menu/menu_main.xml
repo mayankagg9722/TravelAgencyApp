@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+     <item
+            android:id="@+id/action_notification"
+            android:title="Quiet Notification"
+            android:showAsAction="never"
+            android:checkable="true">
+        </item>
     <item
-        android:id="@+id/action_notification"
-        android:orderInCategory="100"
-        android:title="Quiet Notification"
-        app:showAsAction="never"
-        android:checkable="true"/>
+        android:id="@+id/location"
+        android:title="Location"
+        android:icon="@drawable/location"
+        app:showAsAction="always">
+
+    </item>
 </menu>

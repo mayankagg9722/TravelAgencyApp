@@ -4,31 +4,87 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="com.example.mayank.travelagentproject.Modedislpay"
-android:background="@drawable/homeactivity">
+android:background="@drawable/newback">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select Mode"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:id="@+id/selectmodetext"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/myactionbarcolor"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/selectmodetext"
+        ></View>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/selectmodetext"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/autoCompleteTextViewfrom"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="30dp"
+        android:fastScrollEnabled="true"/>
+
+    <AutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:hint="From"
+        android:textSize="25dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:id="@+id/autoCompleteTextViewfrom"
+        android:textStyle="italic|bold"
+        android:completionThreshold="2"
+        android:maxEms="15"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/autoCompleteTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 <AutoCompleteTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="Enter City.."
+    android:singleLine="true"
+    android:inputType="text"
+    android:maxLines="1"
+    android:textColorHint="#ffffff"
+    android:hint="To"
     android:textSize="25dp"
-    android:textAlignment="center"
+    android:textColor="#ffffff"
     android:textAppearance="?android:textAppearanceLarge"
     android:textStyle="italic|bold"
     android:id="@+id/autoCompleteTextView"
     android:completionThreshold="2"
     android:maxEms="15"
-    android:layout_alignParentTop="true"
-    android:layout_toStartOf="@+id/imageButton"/>
+    android:layout_above="@+id/imageButton"
+    android:layout_alignParentStart="true" />
 
 <ImageButton
     android:layout_width="50dp"
     android:layout_height="50dp"
     android:id="@+id/imageButton"
-    android:src="@drawable/done"
+    android:src="@drawable/donetwo"
     android:clickable="true"
     android:background="#00FFFFFF"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentEnd="true"/>
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

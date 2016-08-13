@@ -1,13 +1,13 @@
 package com.example.mayank.travelagentproject;
 import android.app.AlertDialog;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,13 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,10 +30,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<ModeTransport> list=new ArrayList<ModeTransport>();
+
+    int flag=0;
+    AutoCompleteTextView autoCompleteTextView;
     int [] image={R.drawable.newrailway,R.drawable.newairway,R.drawable.newlocal,R.drawable.newfuntwo};
     String [] name={"Railways","Airways","Locale","Fun Spots"};
 
+
     CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +48,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.setTitle("Guest");
         setSupportActionBar(toolbar);
 
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+        actionBar.show();
+
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
-        Snackbar.make(coordinatorLayout, "Welcome, You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        Snackbar.make(coordinatorLayout, "Welcome, You Logged In As Guest.", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+
+        Calendar c=Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            Snackbar.make(coordinatorLayout, "Good Morning,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            Snackbar.make(coordinatorLayout, "Good Afternoon,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+        }
+        else if(timeOfDay >= 16 && timeOfDay < 21){
+            Snackbar.make(coordinatorLayout, "Good Evening,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            Snackbar.make(coordinatorLayout, "Welcome,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             else
             item.setChecked(true);
         }
+        if(id==R.id.location) {
+            enterlocation();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -134,5 +157,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void enterlocation(){
+
+        AlertDialog.Builder alertBuilder =new AlertDialog.Builder(this);
+        alertBuilder.setTitle("Enter City name for which you want to book a cab:");
+        autoCompleteTextView=new AutoCompleteTextView(this);
+        autoCompleteTextView.setSingleLine();
+        autoCompleteTextView.setMaxLines(1);
+        autoCompleteTextView.setDropDownBackgroundResource(R.color.droplist);
+        autoCompleteTextView.setHint("Enter city..");
+        autoCompleteTextView.setHintTextColor(Color.parseColor("#000000"));
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,
+                getResources().getStringArray(R.array.cityarray)));
+
+        alertBuilder.setView(autoCompleteTextView);
+
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (autoCompleteTextView.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter city name!", Toast.LENGTH_SHORT).show();
+                    enterlocation();
+                }
+                else {
+                    flag=0;
+                    for(String n:getResources().getStringArray(R.array.cityarray)) {
+                        if (autoCompleteTextView.getText().toString().equals(n)) {
+                            flag=1;
+                        }
+                    }
+                    if(flag==1){
+                        flag=0;
+                        ModeAdapter.start=true;
+                        Modedislpay.to=autoCompleteTextView.getText().toString();
+
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Sorry!..We are not currently available here.",
+                                Toast.LENGTH_SHORT).show();
+                        enterlocation();
+                    }
+                }
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.create().show();
     }
 }

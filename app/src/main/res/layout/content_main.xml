@@ -20,7 +20,7 @@ tools:showIn="@layout/app_bar_main"
         android:layout_centerHorizontal="true"
         android:text="Book A Cab For:"
         android:textStyle="bold|italic"
-        android:typeface="serif"
+        android:typeface="sans"
         android:id="@+id/text"
         />
 

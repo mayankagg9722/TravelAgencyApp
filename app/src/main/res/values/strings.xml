@@ -8,19 +8,17 @@
 
     <string-array name="cityarray">
 
-        <item>Andhra Pradesh</item>
+     <!--   <item>Andhra Pradesh</item>
         <item>Amaravathi</item>
         <item>Anantapur</item>
         <item>Guntur</item>
         <item>Kurnool</item>
         <item>Nellore</item>
-        <item>Tirupati</item>
         <item>Vijayawada</item>
         <item>Visakhapatnam</item>
 
 
         <item>Karnataka</item>
-        <item>Bangalore </item>
         <item>Manglore</item>
         <item>Mysore</item>
 
@@ -32,7 +30,7 @@
 
 
         <item>Telangana</item>
-        <item>Hyderabad</item>
+
         <item>Warangal</item>
         <item>Adilabad</item>
         <item>Alampur</item>
@@ -43,20 +41,67 @@
         <item>Nizamabad</item>
         <item>Khammam</item>
 
-
         <item>Tamil Nadu</item>
-        <item>Chennai </item>
-        <item>Coimbatore</item>
+        linked cities for now...
+        -->
+
         <item>Hyderabad</item>
+        <item>Bangalore </item>
+        <item>Tirupati</item>
+        <item>Chennai </item>'
+        <item>Hyderabad</item>
+        <item>Coimbatore</item>
         <item>Madurai</item>
         <item>Pondicherry</item>
         <item>Vellore</item>
         <item>Kodaikanal</item>
         <item>Ooty</item>
         <item>Erode</item>
-        <item>Kanchipuram</item>
         <item>Rameswaram</item>
     </string-array>
+
+    <string-array name="chennai_stations">
+        <item> Chennai Beach MSB</item>
+        <item>Chennai Central MAS</item>
+        <item> Moore Market Complex	MST</item>
+        <item> Royapuram	RPM</item>
+        <item>Basin Bridge	BBQ</item>
+        <item>Washermanpet	WST</item>
+        <item>Chennai Fort	MSF</item>
+        <item>Chennai Park	MPK</item>
+        <item> Chennai Egmore	MS</item>
+        <item> Korukkupet	KOK</item>
+        <item>Tondiarpet	TNP</item>
+        <item>V. O. C. Nagar	VOC</item>
+        <item>Vyasarpadi Jeeva	VPY</item>
+        <item> Perambur	PER</item>
+        <item> Perambur Carriage Works	PCW</item>
+        <item> Perambur Loco Works	PEW</item>
+        <item> Villivakkam	VLK</item>
+        <item> Chetput	MSC</item>
+        <item> Nungambakkam	NBK</item>
+        <item>Kodambakkam	MKK</item>
+        <item>Mambalam	MBM</item>
+        <item>Saidapet	SP</item>
+        <item>Guindy	GDY</item>
+        <item>Chennai Park Town	MPKT</item>
+        <item>Chintadripet	MCPT</item>
+        <item>Chepauk	MCPK</item>
+        <item>Thiruvallikeni	MTCN</item>
+        <item>Light House	MLHS</item>
+        <item>Thirumayilai	MTMY</item>
+        <item>Mandaveli	MNDY</item>
+        <item>Greenways Road	GWYR</item>
+        <item>Kotturpuram	KTPM</item>
+        <item>Kasturba Nagar	KTBR</item>
+        <item>Indira Nagar	INDR</item>
+        <item>Thiruvanmiyur	TYMR</item>
+        <item>Taramani	TRMN</item>
+        <item>Perungudi	PRGD</item>
+        <item>Velachery	VLCY</item>
+
+    </string-array>
+
 </resources>
 
 
