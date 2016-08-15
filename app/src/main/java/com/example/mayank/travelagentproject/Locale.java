@@ -163,11 +163,13 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
+                progressDialog.dismiss();
             }
         });
         builder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                progressDialog.dismiss();
             }
         });
         builder.create().show();

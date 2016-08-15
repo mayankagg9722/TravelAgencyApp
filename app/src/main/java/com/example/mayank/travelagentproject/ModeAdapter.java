@@ -73,7 +73,7 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> 
                     intent.putExtra("mode", modeTransport.getName());
                     ctx.startActivity(intent);
                 } else {
-                    Toast.makeText(ctx, "Please Enter Location first on top ..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, "Please First Enter Location At Top", Toast.LENGTH_SHORT).show();
                 }
             }
         }

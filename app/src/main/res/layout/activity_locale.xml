@@ -74,7 +74,7 @@
         android:textColorHint="#000000"
         android:layout_above="@+id/donetwo"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"/>
 
     <ImageButton
         android:layout_width="70dp"
@@ -85,7 +85,7 @@
         android:clickable="true"
         android:layout_marginBottom="30dp"
         android:background="#00FFFFFF"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:layout_width="wrap_content"

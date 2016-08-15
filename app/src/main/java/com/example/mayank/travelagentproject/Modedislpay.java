@@ -114,26 +114,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (autoCompleteTextView.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please enter city name!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    flag=0;
-                    for(String n:cityname) {
-                        if (autoCompleteTextView.getText().toString().equals(n)) {
-                            flag=1;
-                        }
-                    }
-                    if(flag==1){
-                        flag=0;
-                        Intent intent = new Intent(getApplicationContext(), Modedislpay.class);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "Sorry!..We are not currently available here.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
+                //open next Activity
             }
         });
 
@@ -343,11 +324,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
+                progressDialog.dismiss();
             }
         });
         builder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                progressDialog.dismiss();
             }
         });
         builder.create().show();
