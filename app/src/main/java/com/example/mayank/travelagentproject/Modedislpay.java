@@ -40,7 +40,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
     ArrayAdapter<String> cityadapter;
     TextView textView;
     ImageButton done;
-    int flag=0;
+    int flag = 0;
     static String to;
     ListView listView;
     ArrayAdapter arrayAdapter;
@@ -185,7 +185,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         }
 
 
-        //####### OPENING LIST ACTIVITY#######//
+        //######################################## OPENING LIST ACTIVITY#################################################
 
         else if(mode.equals("Airways")){
             textView.setText("Select Airport");

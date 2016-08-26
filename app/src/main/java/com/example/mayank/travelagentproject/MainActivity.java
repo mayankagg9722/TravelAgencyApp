@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void enterlocation(){
 
         AlertDialog.Builder alertBuilder =new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Enter City name for which you want to book a cab:");
+        alertBuilder.setTitle("Enter City name for which you want to book a cab : ");
         autoCompleteTextView=new AutoCompleteTextView(this);
         autoCompleteTextView.setSingleLine();
         autoCompleteTextView.setMaxLines(1);
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "Sorry!..We are not currently available here.",
+                        Toast.makeText(getApplicationContext(), "Sorry!..We are not currently in this City",
                                 Toast.LENGTH_SHORT).show();
                         enterlocation();
                     }
