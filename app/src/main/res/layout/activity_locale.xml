@@ -24,7 +24,8 @@
         android:background="@color/myactionbarcolor"
         android:layout_marginTop="3dp"
         android:layout_below="@+id/selectmodetext"
-        android:id="@+id/view"></View>
+        android:id="@+id/view">
+    </View>
 
     <EditText
         android:layout_width="wrap_content"
@@ -83,6 +84,7 @@
         android:src="@drawable/donetwo"
         android:layout_centerHorizontal="true"
         android:clickable="true"
+        android:onClick="openTACardView"
         android:layout_marginBottom="30dp"
         android:background="#00FFFFFF"
         android:layout_alignParentBottom="true" />
