@@ -1,12 +1,13 @@
 package com.example.mayank.travelagentproject;
 
-import android.*;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -17,11 +18,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,35 +36,41 @@ import com.google.android.gms.location.places.Places;
 public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener {
 
 
-
-    AutoCompleteTextView autoCompleteTextView,autoCompleteTextViewfrom;
-    ArrayAdapter<String> cityadapter;
-    TextView textView;
+    EditText autoCompleteTextViewfrom,name,email,address,phone;
+    static EditText datefield,timefield;
     ImageButton done;
-    int flag = 0;
     static String to;
-    ListView listView;
+    String carsize="mini";
     ArrayAdapter arrayAdapter;
-
+    Spinner spinner;
     static int PERMISSION_REQUEST_CODE = 1;
     private GoogleApiClient mGoogleApiClient;
     boolean enabled;
     ProgressDialog progressDialog;
-    Button getlocation;
+    Button getlocation,button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modedislpay);
+        setContentView(R.layout.activity_modedisp);
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Enter Details");
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
-        listView=(ListView)findViewById(R.id.listView);
-        textView=(TextView)findViewById(R.id.selectmodetext);
-        getlocation=(Button)findViewById(R.id.getbutton);
+        getlocation=(Button)findViewById(R.id.getlocation);
+        autoCompleteTextViewfrom = (EditText) findViewById(R.id.autoCompleteTextViewfrom);
+        done=(ImageButton)findViewById(R.id.imageButton);
+        spinner=(Spinner)findViewById(R.id.spinner);
+        name=(EditText)findViewById(R.id.name);
+        email=(EditText)findViewById(R.id.email);
+        address=(EditText)findViewById(R.id.address);
+        phone=(EditText)findViewById(R.id.phone);
+        button=(Button)findViewById(R.id.button);
 
+        datefield=(EditText)findViewById(R.id.datetext);
+        timefield=(EditText)findViewById(R.id.timetext);
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -92,29 +99,21 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         });
 
-
-
-
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextViewfrom = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextViewfrom);
-
-        done=(ImageButton)findViewById(R.id.imageButton);
-
-        final String[] cityname = getResources().getStringArray(R.array.cityarray);
-        cityadapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,cityname);
-
-        autoCompleteTextView.setAdapter(cityadapter);
-        autoCompleteTextView.setDropDownBackgroundResource(R.color.droplist);
-
-        autoCompleteTextViewfrom.setAdapter(cityadapter);
-        autoCompleteTextViewfrom.setDropDownBackgroundResource(R.color.droplist);
-
-
-
-        done.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //open next Activity
+                progressDialog.setMessage("Please Wait!!");
+                progressDialog.setMax(2);
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+                LocationManager locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                if (!enabled) {
+                    showalertdialog();
+                }
+                else {
+                    callPlaceDetectionApi();
+                }
             }
         });
 
@@ -122,65 +121,64 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         final String mode=intent.getStringExtra("mode");
 
         if(mode.equals("Railways")){
-            textView.setText("Select Railway Station");
             if(to.equals("Hyderabad")){
                 String[]name={"Station Name:\tHyderabad Deccan railway station\nStation code:\tHYB"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Bangalore")){
                 String[]name={"Station Name:\tBangalore City railway station\nStation code:\tSBC"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Tirupati")){
                 String[]name={"Station Name:\tTirupati railway station\n" +"Station code:\tTPTY"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Chennai")){
                 String [] name=getResources().getStringArray(R.array.chennai_stations);
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
 
             else if(to.equals("Coimbatore")){
                 String[]name={"Station Name:\tCoimbatore Junction railway station\n" +"Station code:\tCBE"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Madurai")){
                 String[]name={"Station Name:\tMadurai Junction railway station\n" +"Station code:\tMDU"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Pondicherry")){
                 String[]name={"Station Name:\tPuducherry\n" +"Station code:\tPDY"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Vellore")){
                 String[]name={"Station Name:\tKatpadi Junction\n" +"Station code:\tKPD"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }else if(to.equals("Kodaikanal")){
                 String[]name={"Station Name:\tKodaikanal Road railway station\n" +"Station code:\tKQN"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+               // listView.setAdapter(arrayAdapter);
             }else if(to.equals("Ooty")){
                 String[]name={"Station Name:\tUdhagamandalam\n" +"Station code:\tUAM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Erode")){
                 String[]name={"Station Name:\tErode Junction\n" +"Station code:\tED"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Rameshwaram")){
                 String[]name={"Station Name:\tRameswaram\n" +"Station code:\tRMM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
         }
 
@@ -188,89 +186,94 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         //######################################## OPENING LIST ACTIVITY#################################################
 
         else if(mode.equals("Airways")){
-            textView.setText("Select Airport");
             if(to.equals("Hyderabad")){
                 String[]name={"Airport Name:\tRajiv Gandhi International Airport\nAirport code:\tHYD"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Bangalore")){
                 String[]name={"Airport Name:\tKempegowda International Airport\nAirport code:\tBLR"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Tirupati")){
                 String[]name={"Airport Name:\tTTirupati airport\nAirport code:\tTIR"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Chennai")){
                 String [] name={"Airport Name:\tChennai International Airport\nAirport code:\tMAA"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
 
             else if(to.equals("Coimbatore")){
                 String[]name={"Airport Name:\tCoimbatore International Airport\nAirport code:\tCJB"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Madurai")){
                 String[]name={"Airport Name:\tMadurai Airport\nAirport code:\tIXM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Pondicherry")){
                 String[]name={"Airport Name:\tPuducherry Airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Vellore")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         " Nearest Airports:\n1.Chennai Airport\n" +
                         "2.Banglore Airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }else if(to.equals("Kodaikanal")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n Nearest Airports:\n1.Madurai Airport\n2.Coimbatore airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+               // listView.setAdapter(arrayAdapter);
             }else if(to.equals("Ooty")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\nNearest Airports:\nCoimbatore Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Erode")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         "Nearest Airports:\n1.Coimbatore Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Rameshwaram")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         "Nearest Airports:\n1.Madurai Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                listView.setAdapter(arrayAdapter);
+                //listView.setAdapter(arrayAdapter);
             }
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setAdapter(arrayAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(!(mode.equals("Airways")&&(to.equals("Rameshwaram")||to.equals("Erode")||to.equals("Ooty")||to.equals("Kodaikanal")||to.equals("Vellore"))))
-                autoCompleteTextView.setText(adapterView.getItemAtPosition(i).toString()+","+to.toString());
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if((mode.equals("Airways")&&(to.equals("Rameshwaram")||to.equals("Erode")||to.equals("Ooty")||to.equals("Kodaikanal")||to.equals("Vellore"))))
+                    Toast.makeText(getApplicationContext(),"Please Select Specified City and then try...",Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(getApplicationContext(),"Please Select Specified City.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getApplicationContext()," Please Select Destination",Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-        //mode of transport
-        // autoCompleteTextViewfrom.setText(mode);
-
-        //city entered in dialog
-        //autoCompleteTextView.setText(to);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open next Activity
+            }
+        });
 
     }
 
@@ -300,6 +303,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             @Override
             public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
                 for (PlaceLikelihood placeLikelihood : placeLikelihoods) {
+                    address.setText(placeLikelihood.getPlace().getAddress().toString());
                     autoCompleteTextViewfrom.setText(placeLikelihood.getPlace().getAddress().toString());
                     progressDialog.dismiss();
                 }
@@ -320,6 +324,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         AlertDialog.Builder builder = new AlertDialog.Builder(Modedislpay.this);
         builder.setTitle("Enable GPS");
         builder.setMessage("Please enable GPS");
+        builder.setCancelable(false);
         builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -336,4 +341,135 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         builder.create().show();
     }
 
+    public void accar(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.ac:
+                if (checked)
+                    Toast.makeText(this, "ac", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nonac:
+                if (checked)
+                    Toast.makeText(this, "nonac", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+    public void carsize(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.large:
+                if (checked) {
+                    carsize="large";
+                    Toast.makeText(this, "large", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.mini:
+                if (checked){
+                    carsize="mini";
+                    Toast.makeText(this, "mini", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    public void traveltype(View view)
+    {
+        Boolean checked=((RadioButton)view).isChecked();
+        switch (view.getId()){
+            case R.id.share:
+                if(checked){
+                 sharealert();
+                }
+                break;
+            case R.id.individual:
+                if(checked)
+                    Toast.makeText(this,"indiv",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    public void cartime(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.drop:
+                if (checked)
+                    Toast.makeText(this, "drop", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.wait:
+                if (checked) {
+                    alert();
+                    break;
+                }
+        }
+    }
+    public void dateenter(View view){
+        DatePicker datePicker=new DatePicker();
+        datePicker.show(getSupportFragmentManager(),"date");
+    }
+    public void timeset(View view){
+        TimePicker timePicker=new TimePicker();
+        timePicker.show(getSupportFragmentManager(),"time");
+
+    }
+
+    public void alert(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setCancelable(false);
+        alert.setTitle("Wait-Hours");
+        alert.setMessage("Enter wait Hours for cab:");
+        final EditText editText=new EditText(this);
+        editText.setHint("Enter no. of hours");
+        alert.setView(editText);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                    String waithours=editText.getText().toString();
+
+                if(Integer.parseInt(waithours)>24){
+                        Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
+                        alert();
+                    }
+            }
+        });
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert();
+            }
+        });
+        alert.create().show();
+    }
+    public void sharealert(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Cab Share");
+        alert.setCancelable(false);
+        alert.setMessage("Enter no. of person for cab share:");
+        final EditText editText=new EditText(this);
+        editText.setHint("Enter no. of person");
+        alert.setView(editText);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String waithours=editText.getText().toString();
+                if(carsize.equals("mini")&&Integer.parseInt(waithours)>4){
+                    Toast.makeText(getApplicationContext(),"People should be less than 4 for mini cab..",Toast.LENGTH_SHORT).show();
+                    sharealert();
+                }
+                if(carsize.equals("large")&&Integer.parseInt(waithours)>7){
+                    Toast.makeText(getApplicationContext(),"People should be less than 7 for large cab..",Toast.LENGTH_SHORT).show();
+                    sharealert();
+                }
+            }
+        });
+
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sharealert();
+            }
+        });
+        alert.create().show();
+    }
 }
+

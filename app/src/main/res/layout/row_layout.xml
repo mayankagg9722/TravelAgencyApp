@@ -6,6 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingTop="7dp"
         android:text="Large Text"
         android:textColor="#000000"
         android:id="@+id/rowlayouttext"
@@ -13,9 +14,10 @@
         android:layout_centerHorizontal="true" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:background="#FF5722"
         android:layout_marginTop="3dp"
         android:layout_below="@+id/rowlayouttext"
-        ></View>
+        android:id="@+id/view4"></View>
+
 </RelativeLayout>

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -17,7 +19,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.cast.framework.media.RemoteMediaClient;
@@ -37,8 +42,12 @@ import com.google.firebase.database.DatabaseReference;
 public class Locale extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     Button button;
-    Button getlocation;
-    EditText name, address, from;
+    Button getlocation,buttonlocation;
+    static EditText datefield,timefield;
+    ImageButton done;
+    String carsize="mini";
+
+    EditText uname, uaddress, from,name,email,address,phone;
     static int PLACE_PICKER_REQUEST = 1;
     static int PERMISSION_REQUEST_CODE = 1;
     private GoogleApiClient mGoogleApiClient;
@@ -52,12 +61,23 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDefaultDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Enter Location");
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
         button = (Button) findViewById(R.id.pickbutton);
-        name = (EditText) findViewById(R.id.namepicked);
-        address = (EditText) findViewById(R.id.addresspicked);
-        from = (EditText) findViewById(R.id.fromlocal);
+        uname = (EditText) findViewById(R.id.namepicked);
+        uaddress = (EditText) findViewById(R.id.addresspicked);
+        from = (EditText) findViewById(R.id.autoCompleteTextViewfrom);
         getlocation=(Button)findViewById(R.id.getlocation);
+
+        done=(ImageButton)findViewById(R.id.imageButton);
+        name=(EditText)findViewById(R.id.name);
+        email=(EditText)findViewById(R.id.email);
+        address=(EditText)findViewById(R.id.address);
+        phone=(EditText)findViewById(R.id.phone);
+        buttonlocation=(Button)findViewById(R.id.button);
+
+        datefield=(EditText)findViewById(R.id.datetext);
+        timefield=(EditText)findViewById(R.id.timetext);
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -69,6 +89,24 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         progressDialog=new ProgressDialog(Locale.this);
 
         getlocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog.setMessage("Please Wait!!");
+                progressDialog.setMax(2);
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+                LocationManager locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                if (!enabled) {
+                    showalertdialog();
+                }
+                else {
+                    callPlaceDetectionApi();
+                }
+            }
+        });
+
+        buttonlocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressDialog.setMessage("Please Wait!!");
@@ -106,8 +144,8 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                name.setText(place.getName());
-                address.setText(place.getAddress());
+                uname.setText(place.getName());
+                uaddress.setText(place.getAddress());
             }
         }
 
@@ -140,6 +178,7 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
                 for (PlaceLikelihood placeLikelihood : placeLikelihoods) {
                     from.setText(placeLikelihood.getPlace().getAddress().toString());
+                    address.setText(placeLikelihood.getPlace().getAddress().toString());
                     progressDialog.dismiss();
                 }
                 placeLikelihoods.release();
@@ -158,6 +197,7 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
     public void showalertdialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(Locale.this);
         builder.setTitle("Enable GPS");
+        builder.setCancelable(false);
         builder.setMessage("Please enable GPS");
         builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -173,6 +213,139 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         });
         builder.create().show();
+    }
+
+
+    public void accar(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.ac:
+                if (checked)
+                    Toast.makeText(this, "ac", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nonac:
+                if (checked)
+                    Toast.makeText(this, "nonac", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+    public void carsize(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.large:
+                if (checked) {
+                    carsize="large";
+                    Toast.makeText(this, "large", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.mini:
+                if (checked){
+                    carsize="mini";
+                    Toast.makeText(this, "mini", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    public void traveltype(View view)
+    {
+        Boolean checked=((RadioButton)view).isChecked();
+        switch (view.getId()){
+            case R.id.share:
+                if(checked){
+                    sharealert();
+                }
+                break;
+            case R.id.individual:
+                if(checked)
+                    Toast.makeText(this,"indiv",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    public void cartime(View view) {
+        Boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.drop:
+                if (checked)
+                    Toast.makeText(this, "drop", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.wait:
+                if (checked) {
+                    alert();
+                    break;
+                }
+        }
+    }
+
+    public void dateenter(View view){
+        DatePicker datePicker=new DatePicker();
+        datePicker.show(getSupportFragmentManager(),"date");
+    }
+    public void timeset(View view){
+        TimePicker timePicker=new TimePicker();
+        timePicker.show(getSupportFragmentManager(),"time");
+
+    }
+
+    public void alert(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Wait-Hours");
+        alert.setCancelable(false);
+        alert.setMessage("Enter wait Hours for cab:");
+        final EditText editText=new EditText(this);
+        editText.setHint("Enter no. of hours");
+        alert.setView(editText);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String waithours=editText.getText().toString();
+
+                if(Integer.parseInt(waithours)>24){
+                    Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
+                    alert();
+                }
+            }
+        });
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alert();
+            }
+        });
+        alert.create().show();
+    }
+    public void sharealert(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Cab Share");
+        alert.setCancelable(false);
+        alert.setMessage("Enter no. of person for cab share:");
+        final EditText editText=new EditText(this);
+        editText.setHint("Enter no. of person");
+        alert.setView(editText);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String waithours=editText.getText().toString();
+                if(carsize.equals("mini")&&Integer.parseInt(waithours)>4){
+                    Toast.makeText(getApplicationContext(),"People should be less than 4 for mini cab..",Toast.LENGTH_SHORT).show();
+                    sharealert();
+                }
+                if(carsize.equals("large")&&Integer.parseInt(waithours)>7){
+                    Toast.makeText(getApplicationContext(),"People should be less than 7 for large cab..",Toast.LENGTH_SHORT).show();
+                    sharealert();
+                }
+            }
+        });
+
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sharealert();
+            }
+        });
+        alert.create().show();
     }
 
 }

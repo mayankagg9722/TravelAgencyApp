@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     int flag=0;
     AutoCompleteTextView autoCompleteTextView;
-    int [] image={R.drawable.newrailway,R.drawable.newairway,R.drawable.newlocal,R.drawable.newfuntwo};
-    String [] name={"Railways","Airways","Locale","Fun Spots"};
+    int [] image={R.drawable.newrailway,R.drawable.newairway,R.drawable.newlocal};
+    String [] name={"Railways","Airways","Locale"};
 
 
     CoordinatorLayout coordinatorLayout;
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         AlertDialog.Builder alertBuilder =new AlertDialog.Builder(this);
         alertBuilder.setTitle("Enter City name for which you want to book a cab : ");
+        alertBuilder.setCancelable(false);
         autoCompleteTextView=new AutoCompleteTextView(this);
         autoCompleteTextView.setSingleLine();
         autoCompleteTextView.setMaxLines(1);
