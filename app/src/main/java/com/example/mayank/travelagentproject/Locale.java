@@ -102,6 +102,11 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
+    public void openTACardView(View view)   {
+        Intent i = new Intent(this, TravelAgents.class);
+        startActivity(i);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
