@@ -46,7 +46,6 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
     static EditText datefield,timefield;
     ImageButton done;
     String carsize="mini";
-
     EditText uname, uaddress, from,name,email,address,phone;
     static int PLACE_PICKER_REQUEST = 1;
     static int PERMISSION_REQUEST_CODE = 1;
@@ -138,6 +137,11 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         });
 
+    }
+
+    public void openTACardView(View view)   {
+        Intent i = new Intent(this, TravelAgents.class);
+        startActivity(i);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

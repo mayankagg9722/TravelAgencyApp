@@ -374,6 +374,7 @@
             android:layout_below="@+id/cartimelayout"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
+            android:onClick="openTACardView"
             />
     </RelativeLayout>
 
