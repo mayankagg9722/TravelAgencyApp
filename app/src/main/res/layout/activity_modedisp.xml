@@ -174,7 +174,7 @@
             android:layout_below="@+id/datetext"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/date"
-            android:hint="12:00 am"/>
+            android:hint="20:00"/>
 
         <Button
             android:layout_width="wrap_content"

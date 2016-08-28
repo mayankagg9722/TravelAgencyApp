@@ -13,6 +13,7 @@ import java.util.Calendar;
  */
 public class TimePicker extends DialogFragment {
 
+    static int flag=0;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -13,7 +13,6 @@ import java.util.Calendar;
 public class Datesetting implements DatePickerDialog.OnDateSetListener{
 
     Context context;
-
     public Datesetting(Context context) {
         this.context = context;
     }
@@ -21,7 +20,9 @@ public class Datesetting implements DatePickerDialog.OnDateSetListener{
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         String date=i2+"/"+i1+"/"+i;
+        if(com.example.mayank.travelagentproject.DatePicker.flag==1)
+            Locale.datefield.setText(date);
+        else
         Modedislpay.datefield.setText(date);
-
     }
 }

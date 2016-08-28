@@ -18,7 +18,11 @@ public class TimeChange implements TimePickerDialog.OnTimeSetListener {
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1){
         String time=i+":"+i1;
-        Modedislpay.timefield.setText(time);
+        if(com.example.mayank.travelagentproject.TimePicker.flag==1)
+            Locale.timefield.setText(time);
+        else
+            Modedislpay.timefield.setText(time);
+
     }
 
 }

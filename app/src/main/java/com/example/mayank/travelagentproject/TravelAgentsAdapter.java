@@ -61,12 +61,14 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
             super(view);
             this.details = details;
             this.ctx = ctx;
+
             view.setOnClickListener(this);
+
             img = (ImageView) view.findViewById(R.id.ta_image);
             taName = (TextView) view.findViewById(R.id.travelAgent_name);
             taLocation = (TextView) view.findViewById(R.id.ta_location);
-
         }
+
         @Override
         public void onClick(View view) {
             int position=getAdapterPosition();

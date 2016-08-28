@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +40,12 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
     EditText autoCompleteTextViewfrom,name,email,address,phone;
     static EditText datefield,timefield;
     ImageButton done;
+
     static String to;
+
+    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop=Down";
+    int flag=0;
+
     String carsize="mini";
     ArrayAdapter arrayAdapter;
     Spinner spinner;
@@ -124,61 +130,49 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             if(to.equals("Hyderabad")){
                 String[]name={"Station Name:\tHyderabad Deccan railway station\nStation code:\tHYB"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Bangalore")){
                 String[]name={"Station Name:\tBangalore City railway station\nStation code:\tSBC"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Tirupati")){
                 String[]name={"Station Name:\tTirupati railway station\n" +"Station code:\tTPTY"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Chennai")){
                 String [] name=getResources().getStringArray(R.array.chennai_stations);
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
 
             else if(to.equals("Coimbatore")){
                 String[]name={"Station Name:\tCoimbatore Junction railway station\n" +"Station code:\tCBE"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Madurai")){
                 String[]name={"Station Name:\tMadurai Junction railway station\n" +"Station code:\tMDU"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Pondicherry")){
                 String[]name={"Station Name:\tPuducherry\n" +"Station code:\tPDY"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Vellore")){
                 String[]name={"Station Name:\tKatpadi Junction\n" +"Station code:\tKPD"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }else if(to.equals("Kodaikanal")){
                 String[]name={"Station Name:\tKodaikanal Road railway station\n" +"Station code:\tKQN"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-               // listView.setAdapter(arrayAdapter);
             }else if(to.equals("Ooty")){
                 String[]name={"Station Name:\tUdhagamandalam\n" +"Station code:\tUAM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Erode")){
                 String[]name={"Station Name:\tErode Junction\n" +"Station code:\tED"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Rameshwaram")){
                 String[]name={"Station Name:\tRameswaram\n" +"Station code:\tRMM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
         }
 
@@ -189,65 +183,53 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             if(to.equals("Hyderabad")){
                 String[]name={"Airport Name:\tRajiv Gandhi International Airport\nAirport code:\tHYD"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Bangalore")){
                 String[]name={"Airport Name:\tKempegowda International Airport\nAirport code:\tBLR"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Tirupati")){
                 String[]name={"Airport Name:\tTTirupati airport\nAirport code:\tTIR"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Chennai")){
                 String [] name={"Airport Name:\tChennai International Airport\nAirport code:\tMAA"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
 
             else if(to.equals("Coimbatore")){
                 String[]name={"Airport Name:\tCoimbatore International Airport\nAirport code:\tCJB"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Madurai")){
                 String[]name={"Airport Name:\tMadurai Airport\nAirport code:\tIXM"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Pondicherry")){
                 String[]name={"Airport Name:\tPuducherry Airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Vellore")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         " Nearest Airports:\n1.Chennai Airport\n" +
                         "2.Banglore Airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }else if(to.equals("Kodaikanal")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n Nearest Airports:\n1.Madurai Airport\n2.Coimbatore airport"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-               // listView.setAdapter(arrayAdapter);
             }else if(to.equals("Ooty")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\nNearest Airports:\nCoimbatore Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-             //   listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Erode")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         "Nearest Airports:\n1.Coimbatore Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
             else if(to.equals("Rameshwaram")){
                 String[]name={"No Available Airports!\nPlease Select Another City.\n" +
                         "Nearest Airports:\n1.Madurai Airport)"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
-                //listView.setAdapter(arrayAdapter);
             }
         }
 
@@ -259,7 +241,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
                 if((mode.equals("Airways")&&(to.equals("Rameshwaram")||to.equals("Erode")||to.equals("Ooty")||to.equals("Kodaikanal")||to.equals("Vellore"))))
                     Toast.makeText(getApplicationContext(),"Please Select Specified City and then try...",Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(getApplicationContext(),adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT).show();
+                    destination=adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -267,20 +249,42 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
                 Toast.makeText(getApplicationContext()," Please Select Destination",Toast.LENGTH_SHORT).show();
             }
         });
-
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), TravelAgents.class);
-                startActivity(i);
-            }
-        });
-
     }
 
     public void openTACardView(View view)   {
-        Intent i = new Intent(this, TravelAgents.class);
-        startActivity(i);
+        checknullfields();
+        if(flag==1) {
+            Toast.makeText(this, "Fill Form Completely", Toast.LENGTH_SHORT).show();
+            flag=0;
+        }
+        else {
+
+            Intent i = new Intent(this, TravelAgents.class);
+
+            i.putExtra("name",name.getText().toString());
+            i.putExtra("address",address.getText().toString());
+            i.putExtra("email",email.getText().toString());
+            i.putExtra("phone",phone.getText().toString());
+            i.putExtra("from",autoCompleteTextViewfrom.getText().toString());
+            i.putExtra("to",destination);
+            i.putExtra("date",datefield.getText().toString());
+            i.putExtra("time",timefield.getText().toString());
+            i.putExtra("cartype",cabtype);
+            i.putExtra("travelpref",cabtravelpref);
+            i.putExtra("carsize",cabsize);
+            i.putExtra("cabtime",cabtime);
+
+            startActivity(i);
+
+            name.setText("");
+            address.setText("");
+            email.setText("");
+            phone.setText("");
+            autoCompleteTextViewfrom.setText("");
+            datefield.setText("");
+            timefield.setText("");
+            flag = 0;
+        }
     }
 
 
@@ -353,11 +357,11 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         switch (view.getId()) {
             case R.id.ac:
                 if (checked)
-                    Toast.makeText(this, "ac", Toast.LENGTH_SHORT).show();
+                    cabtype="AC";
                 break;
             case R.id.nonac:
                 if (checked)
-                    Toast.makeText(this, "nonac", Toast.LENGTH_SHORT).show();
+                    cabtype="NON-AC";
                 break;
         }
 
@@ -368,13 +372,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             case R.id.large:
                 if (checked) {
                     carsize="large";
-                    Toast.makeText(this, "large", Toast.LENGTH_SHORT).show();
+                    carsize="large";
                 }
                 break;
             case R.id.mini:
                 if (checked){
                     carsize="mini";
-                    Toast.makeText(this, "mini", Toast.LENGTH_SHORT).show();
+                    cabsize="mini";
                 }
                 break;
         }
@@ -386,12 +390,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         switch (view.getId()){
             case R.id.share:
                 if(checked){
-                 sharealert();
+                 int i=sharealert();
+                    cabtravelpref="Share with "+i+" person";
                 }
                 break;
             case R.id.individual:
                 if(checked)
-                    Toast.makeText(this,"indiv",Toast.LENGTH_SHORT).show();
+                    cabtravelpref="Individual";
                 break;
         }
     }
@@ -400,11 +405,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         switch (view.getId()) {
             case R.id.drop:
                 if (checked)
+                    cabtime="Drop-Down";
                     Toast.makeText(this, "drop", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.wait:
                 if (checked) {
-                    alert();
+                    int i=alert();
+                    cabtime="Wait For "+i+" hours";
                     break;
                 }
         }
@@ -419,7 +426,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
 
     }
 
-    public void alert(){
+    public int alert(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setCancelable(false);
         alert.setTitle("Wait-Hours");
@@ -445,8 +452,9 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         });
         alert.create().show();
+        return Integer.parseInt(editText.getText().toString());
     }
-    public void sharealert(){
+    public int sharealert(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Cab Share");
         alert.setCancelable(false);
@@ -477,6 +485,26 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         });
         alert.create().show();
+        return Integer.parseInt(editText.getText().toString());
+    }
+
+    public void checknullfields(){
+        if(TextUtils.isEmpty(autoCompleteTextViewfrom.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(destination.toString().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(name.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(address.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(email.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(phone.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(datefield.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(timefield.getText().toString()))
+            flag=1;
     }
 }
 

@@ -283,13 +283,16 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     public void dateenter(View view){
+        DatePicker.flag=1;
         DatePicker datePicker=new DatePicker();
-        datePicker.show(getSupportFragmentManager(),"date");
+        datePicker.show(getSupportFragmentManager(),"d");
+        DatePicker.flag=0;
     }
     public void timeset(View view){
+        TimePicker.flag=1;
         TimePicker timePicker=new TimePicker();
-        timePicker.show(getSupportFragmentManager(),"time");
-
+        timePicker.show(getSupportFragmentManager(),"t");
+        TimePicker.flag=0;
     }
 
     public void alert(){
@@ -311,6 +314,7 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
             }
         });
+
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -342,7 +346,6 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
             }
         });
-
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
