@@ -2,6 +2,7 @@ package com.example.mayank.travelagentproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import java.util.ArrayList;
  * This class contains the adapter to bind the card layout with recycler view
  * Created by UddishVerma on 21/08/16.
  */
+
 public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapter.DetailsViewHolder>{
 
     Context ctx;
@@ -49,32 +53,46 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
         return details.size();
     }
 
-    public class DetailsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class DetailsViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img;
         TextView taName, taLocation;
         Context ctx;
+        LinearLayout linearLayout;
 
         ArrayList<TravelAgents_POJO.TravelAgentsDetails> details = TravelAgents_POJO.getDetails();
 
-        public DetailsViewHolder(View view, ArrayList<TravelAgents_POJO.TravelAgentsDetails> details,Context ctx) {
+        public DetailsViewHolder(View view, final ArrayList<TravelAgents_POJO.TravelAgentsDetails> details, final Context ctx) {
             super(view);
             this.details = details;
             this.ctx = ctx;
-
-            view.setOnClickListener(this);
-
             img = (ImageView) view.findViewById(R.id.ta_image);
             taName = (TextView) view.findViewById(R.id.travelAgent_name);
             taLocation = (TextView) view.findViewById(R.id.ta_location);
+            linearLayout=(LinearLayout)view.findViewById(R.id.linearlayout);
+
+            view.setClickable(true);
+            view.setFocusableInTouchMode(true);
+
+
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position=getAdapterPosition();
+                    TravelAgents_POJO.TravelAgentsDetails obj=details.get(position);
+                    Intent intent=new Intent(ctx,FinalForm.class);
+                    Bundle bundle=TravelAgents.bundle;
+                    bundle.putString("agentname",obj.tAName);
+                    bundle.putString("agentaddress",obj.tAAddress);
+                    bundle.putString("agentcontact",obj.tAnumber);
+                    intent.putExtras(bundle);
+                    ctx.startActivity(intent);
+
+                }
+            });
+
+
         }
 
-        @Override
-        public void onClick(View view) {
-            int position=getAdapterPosition();
-            TravelAgents_POJO.TravelAgentsDetails obj=this.details.get(position);
-            Intent intent=new Intent(this.ctx,FinalForm.class);
-            this.ctx.startActivity(intent);
-        }
     }
 }

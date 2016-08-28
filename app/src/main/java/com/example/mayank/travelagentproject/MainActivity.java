@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void enterlocation(){
+     public void  enterlocation(){
 
         AlertDialog.Builder alertBuilder =new AlertDialog.Builder(this);
         alertBuilder.setTitle("Enter City name for which you want to book a cab : ");

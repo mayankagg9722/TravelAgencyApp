@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,7 +44,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
 
     static String to;
 
-    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop=Down";
+    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop-Down";
     int flag=0;
 
     String carsize="mini";
@@ -241,7 +242,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
                 if((mode.equals("Airways")&&(to.equals("Rameshwaram")||to.equals("Erode")||to.equals("Ooty")||to.equals("Kodaikanal")||to.equals("Vellore"))))
                     Toast.makeText(getApplicationContext(),"Please Select Specified City and then try...",Toast.LENGTH_SHORT).show();
                 else
-                    destination=adapterView.getItemAtPosition(i).toString();
+                {
+                    if(to.toString().equals("Chennai")&&mode.equals("Railways"))
+                        destination=adapterView.getItemAtPosition(i).toString()+" Railway station"+","+to.toString();
+                    else
+                        destination=adapterView.getItemAtPosition(i).toString()+","+to.toString();
+                }
+
             }
 
             @Override
@@ -390,8 +397,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         switch (view.getId()){
             case R.id.share:
                 if(checked){
-                 int i=sharealert();
-                    cabtravelpref="Share with "+i+" person";
+                 sharealert();
                 }
                 break;
             case R.id.individual:
@@ -410,8 +416,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
                 break;
             case R.id.wait:
                 if (checked) {
-                    int i=alert();
-                    cabtime="Wait For "+i+" hours";
+                    alert();
                     break;
                 }
         }
@@ -426,23 +431,26 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
 
     }
 
-    public int alert(){
+    public void alert(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setCancelable(false);
         alert.setTitle("Wait-Hours");
         alert.setMessage("Enter wait Hours for cab:");
         final EditText editText=new EditText(this);
         editText.setHint("Enter no. of hours");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(editText);
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                     String waithours=editText.getText().toString();
 
-                if(Integer.parseInt(waithours)>24&&Integer.parseInt(waithours)==0){
+                if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
                         Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
                         alert();
                     }
+                else
+                    cabtime="Wait For "+editText.getText().toString()+" hours";
             }
         });
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -452,14 +460,14 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         });
         alert.create().show();
-        return Integer.parseInt(editText.getText().toString());
     }
-    public int sharealert(){
+    public void sharealert(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Cab Share");
         alert.setCancelable(false);
         alert.setMessage("Enter no. of person for cab share:");
         final EditText editText=new EditText(this);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setHint("Enter no. of person");
         alert.setView(editText);
 
@@ -467,17 +475,19 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String share=editText.getText().toString();
-                if(carsize.equals("mini")&&Integer.parseInt(share)>4&&Integer.parseInt(share)==0){
-                    Toast.makeText(getApplicationContext(),"People should be less than 4 for mini cab..",Toast.LENGTH_SHORT).show();
+                if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
+                    Toast.makeText(getApplicationContext(),"People should be less than 4 or at least 1 for mini cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }
-                if(carsize.equals("large")&&Integer.parseInt(share)>7){
+                else if(carsize.equals("large")&&(Integer.parseInt(share)>7||Integer.parseInt(share)==0)){
                     Toast.makeText(getApplicationContext(),"People should be less than 7 for large cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }
+                else
+                    cabtravelpref="Share with "+editText.getText().toString()+" person";
+
             }
         });
-
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -485,7 +495,6 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         });
         alert.create().show();
-        return Integer.parseInt(editText.getText().toString());
     }
 
     public void checknullfields(){

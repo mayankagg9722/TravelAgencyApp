@@ -16,16 +16,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.cast.framework.media.RemoteMediaClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -37,13 +36,14 @@ import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.firebase.database.DatabaseReference;
 
 public class Locale extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     Button button;
     Button getlocation,buttonlocation;
     static EditText datefield,timefield;
+    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop=Down";
+    int flag=0;
     ImageButton done;
     String carsize="mini";
     EditText uname, uaddress, from,name,email,address,phone;
@@ -137,11 +137,48 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         });
 
+        destination=uname.getText().toString()+","+uaddress.getText().toString();
+
     }
 
     public void openTACardView(View view)   {
-        Intent i = new Intent(this, TravelAgents.class);
-        startActivity(i);
+        checknullfields()
+        ;
+        if(flag==1) {
+            Toast.makeText(this, "Fill Form Completely", Toast.LENGTH_SHORT).show();
+            flag=0;
+        }
+        else {
+
+            Intent i = new Intent(this, TravelAgents.class);
+
+            Bundle bundle=new Bundle();
+            bundle.putString("name",name.getText().toString());
+            bundle.putString("address",address.getText().toString());
+            bundle.putString("email",email.getText().toString());
+            bundle.putString("phone",phone.getText().toString());
+            bundle.putString("from",from.getText().toString());
+            bundle.putString("to",destination);
+            bundle.putString("date",datefield.getText().toString());
+            bundle.putString("time",timefield.getText().toString());
+            bundle.putString("cartype",cabtype);
+            bundle.putString("travelpref",cabtravelpref);
+            bundle.putString("carsize",cabsize);
+            bundle.putString("cabtime",cabtime);
+            i.putExtras(bundle);
+            startActivity(i);
+
+            name.setText("");
+            address.setText("");
+            email.setText("");
+            phone.setText("");
+            uname.setText("");
+            uaddress.setText("");
+            from.setText("");
+            datefield.setText("");
+            timefield.setText("");
+            flag = 0;
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -225,11 +262,11 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         switch (view.getId()) {
             case R.id.ac:
                 if (checked)
-                    Toast.makeText(this, "ac", Toast.LENGTH_SHORT).show();
+                    cabtype="AC";
                 break;
             case R.id.nonac:
                 if (checked)
-                    Toast.makeText(this, "nonac", Toast.LENGTH_SHORT).show();
+                    cabtype="NON-AC";
                 break;
         }
 
@@ -240,13 +277,13 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             case R.id.large:
                 if (checked) {
                     carsize="large";
-                    Toast.makeText(this, "large", Toast.LENGTH_SHORT).show();
+                    carsize="large";
                 }
                 break;
             case R.id.mini:
                 if (checked){
                     carsize="mini";
-                    Toast.makeText(this, "mini", Toast.LENGTH_SHORT).show();
+                    cabsize="mini";
                 }
                 break;
         }
@@ -263,7 +300,7 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
                 break;
             case R.id.individual:
                 if(checked)
-                    Toast.makeText(this,"indiv",Toast.LENGTH_SHORT).show();
+                    cabtravelpref="Individual";
                 break;
         }
     }
@@ -272,7 +309,8 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         switch (view.getId()) {
             case R.id.drop:
                 if (checked)
-                    Toast.makeText(this, "drop", Toast.LENGTH_SHORT).show();
+                    cabtime="Drop-Down";
+                Toast.makeText(this, "drop", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.wait:
                 if (checked) {
@@ -281,40 +319,40 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
         }
     }
-
     public void dateenter(View view){
         DatePicker.flag=1;
         DatePicker datePicker=new DatePicker();
-        datePicker.show(getSupportFragmentManager(),"d");
-        DatePicker.flag=0;
+        datePicker.show(getSupportFragmentManager(),"date");
     }
     public void timeset(View view){
         TimePicker.flag=1;
         TimePicker timePicker=new TimePicker();
-        timePicker.show(getSupportFragmentManager(),"t");
-        TimePicker.flag=0;
+        timePicker.show(getSupportFragmentManager(),"time");
+
     }
 
     public void alert(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Wait-Hours");
         alert.setCancelable(false);
+        alert.setTitle("Wait-Hours");
         alert.setMessage("Enter wait Hours for cab:");
         final EditText editText=new EditText(this);
         editText.setHint("Enter no. of hours");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(editText);
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String waithours=editText.getText().toString();
 
-                if(Integer.parseInt(waithours)>24){
+                if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
                     Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
                     alert();
                 }
+                else
+                    cabtime="Wait For "+editText.getText().toString()+" hours";
             }
         });
-
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -329,21 +367,25 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         alert.setCancelable(false);
         alert.setMessage("Enter no. of person for cab share:");
         final EditText editText=new EditText(this);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setHint("Enter no. of person");
         alert.setView(editText);
 
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String waithours=editText.getText().toString();
-                if(carsize.equals("mini")&&Integer.parseInt(waithours)>4){
-                    Toast.makeText(getApplicationContext(),"People should be less than 4 for mini cab..",Toast.LENGTH_SHORT).show();
+                String share=editText.getText().toString();
+                if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
+                    Toast.makeText(getApplicationContext(),"People should be less than 4 or at least 1 for mini cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }
-                if(carsize.equals("large")&&Integer.parseInt(waithours)>7){
+                else if(carsize.equals("large")&&(Integer.parseInt(share)>7||Integer.parseInt(share)==0)){
                     Toast.makeText(getApplicationContext(),"People should be less than 7 for large cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }
+                else
+                    cabtravelpref="Share with "+editText.getText().toString()+" person";
+
             }
         });
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -353,6 +395,25 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         });
         alert.create().show();
+    }
+
+    public void checknullfields(){
+        if(TextUtils.isEmpty(from.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(destination.toString().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(name.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(address.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(email.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(phone.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(datefield.getText().toString()))
+            flag=1;
+        else if(TextUtils.isEmpty(timefield.getText().toString()))
+            flag=1;
     }
 
 }
