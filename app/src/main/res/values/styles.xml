@@ -12,10 +12,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"></style>
 
+    <style name="mytablayout" parent="TextAppearance.AppCompat.Widget.ActionBar.Title"></style>
+    <style name="abc" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textSize" >20dp</item>
+    </style>
 </resources>

@@ -64,7 +64,6 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Enter Details");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
         getlocation=(Button)findViewById(R.id.getlocation);
         autoCompleteTextViewfrom = (EditText) findViewById(R.id.autoCompleteTextViewfrom);
@@ -445,12 +444,16 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             public void onClick(DialogInterface dialogInterface, int i) {
                     String waithours=editText.getText().toString();
 
-                if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
+                if(waithours.equals("")){
+                    alert();
+                }
+                else if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
                         Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
                         alert();
                     }
-                else
-                    cabtime="Wait For "+editText.getText().toString()+" hours";
+                else {
+                    cabtime = "Wait For " + editText.getText().toString() + " hours";
+                }
             }
         });
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -475,7 +478,10 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String share=editText.getText().toString();
-                if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
+                if(share.equals("")){
+                    sharealert();
+                }
+                else if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
                     Toast.makeText(getApplicationContext(),"People should be less than 4 or at least 1 for mini cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }

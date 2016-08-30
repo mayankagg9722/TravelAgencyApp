@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#fbc02d</color>
+    <color name="colorPrimaryDark">#f9a825</color>
     <color name="colorAccent">#FF4081</color>
     <color name="droplist">#ffcc5c</color>
-    <color name="myactionbarcolor">#d96459</color>
+    <color name="myactionbarcolor">#ef6c00</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="windowbackground">#fffde7</color>
 </resources>

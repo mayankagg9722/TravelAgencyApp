@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class SplashScreen extends Activity {
@@ -16,7 +15,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         imageView=(ImageView)findViewById(R.id.splashimage);
-        Animation animationUtils=AnimationUtils.loadAnimation(getBaseContext(),R.anim.rotate);
+        Animation animationUtils=AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
         imageView.startAnimation(animationUtils);
         animationUtils.setAnimationListener(new Animation.AnimationListener() {
             @Override

@@ -42,7 +42,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="TRAVEL AGENT NAME"
                 android:textColor="#ffffff"
-                android:paddingTop="20dp"
+                android:paddingTop="40dp"
                 android:textStyle="italic"
                 android:textSize="30dp"
                 android:layout_marginLeft="5dp"

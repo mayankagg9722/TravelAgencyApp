@@ -18,7 +18,6 @@ public class FinalForm extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Travel Agents");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
 
         travelname=(TextView)findViewById(R.id.travelagentname);

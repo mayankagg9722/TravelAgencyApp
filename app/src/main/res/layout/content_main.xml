@@ -18,8 +18,8 @@ tools:showIn="@layout/app_bar_main">
         android:textSize="40dp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:text="Book Cab For"
-        android:textStyle="bold"
+        android:text="Book A Cab"
+        android:textStyle="italic|bold"
         android:typeface="sans"
         android:id="@+id/text"
         />

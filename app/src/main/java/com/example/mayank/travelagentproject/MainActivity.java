@@ -1,6 +1,7 @@
 package com.example.mayank.travelagentproject;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -141,14 +142,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.registeruser) {
-            // Handle the camera action
+            Intent intent=new Intent(this,LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.registertravelagent) {
-
+            Intent intent=new Intent(this,LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.linking) {
 
         } else if (id == R.id.booking) {
 
         } else if (id == R.id.nav_share) {
+
 
         } else if (id == R.id.nav_send) {
 

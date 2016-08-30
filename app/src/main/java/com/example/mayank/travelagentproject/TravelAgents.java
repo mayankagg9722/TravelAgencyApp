@@ -28,7 +28,6 @@ public class TravelAgents extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Travel Agents");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
         bundle=getIntent().getExtras();
 

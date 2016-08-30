@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "53747624511",
+    "firebase_url": "https://travelagentproject-40e3a.firebaseio.com",
+    "project_id": "travelagentproject-40e3a",
+    "storage_bucket": "travelagentproject-40e3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53747624511:android:a69d3668b079de8f",
+        "android_client_info": {
+          "package_name": "com.example.mayank.travelagentproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53747624511-ak80b69e0jdr8s18e9cf5o2851gm509c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mayank.travelagentproject",
+            "certificate_hash": "DC309E1F6E392D2CA3E5B42894CE1B2FF0CFC2FD"
+          }
+        },
+        {
+          "client_id": "53747624511-l25955dmp0crshu1s9jols919t4g7ck9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjK9CMs4BTAKlQhjE9pj0UZi6mEqIqHTE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53747624511-l25955dmp0crshu1s9jols919t4g7ck9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

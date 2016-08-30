@@ -60,7 +60,6 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDefaultDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Enter Location");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#d96459")));
 
         button = (Button) findViewById(R.id.pickbutton);
         uname = (EditText) findViewById(R.id.namepicked);
@@ -126,13 +125,20 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                try {
-                    startActivityForResult(builder.build(Locale.this), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
+                LocationManager locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                if (!enabled) {
+                    showalertdialog();
+                }
+                else {
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    try {
+                        startActivityForResult(builder.build(Locale.this), PLACE_PICKER_REQUEST);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -344,8 +350,10 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String waithours=editText.getText().toString();
-
-                if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
+                if(waithours.equals("")){
+                    alert();
+                }
+                else if(Integer.parseInt(waithours)>24||Integer.parseInt(waithours)==0){
                     Toast.makeText(getApplicationContext(),"Wait Hours should be less than a day..",Toast.LENGTH_SHORT).show();
                     alert();
                 }
@@ -375,7 +383,10 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String share=editText.getText().toString();
-                if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
+                if(share.equals("")){
+                    sharealert();
+                }
+                else if(carsize.equals("mini")&&(Integer.parseInt(share)>4||Integer.parseInt(share)==0)){
                     Toast.makeText(getApplicationContext(),"People should be less than 4 or at least 1 for mini cab..",Toast.LENGTH_SHORT).show();
                     sharealert();
                 }

@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cab Services.."
+        android:text="Cab Services"
         android:typeface="serif"
         android:textStyle="italic|bold"
         android:textSize="45dp"
