@@ -1,9 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mayank.travelagentproject.Login">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,8 +63,6 @@
                     android:layout_marginTop="20dp"
                     android:text="Login"
                     android:textColor="#ffffff"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:id="@+id/login"
                     android:background="@color/myactionbarcolor"/>
                 <TextView
@@ -69,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="Forget Password?"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:layout_marginBottom="30dp"
                     android:textColor="#000000"
                     android:gravity="center"/>
@@ -83,7 +84,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginTop="15dp"
         android:text="OR"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textStyle="italic|bold"
         android:id="@+id/textView3"
         android:layout_below="@+id/linearLayout"
@@ -91,15 +92,14 @@
 
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="login with Google"
         android:id="@+id/googlelogo"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="15dp"
         android:drawableLeft="@drawable/google"
         android:background="#ffffff"
-        android:layout_marginLeft="10dp"
         android:layout_below="@+id/textView3"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/facebooklogo" />
@@ -109,13 +109,13 @@
         android:layout_height="wrap_content"
         android:text="Login with Facebook"
         android:id="@+id/facebooklogo"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="15dp"
         android:textColor="#ffffff"
-        android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/facebook"
         android:background="#3b5998"
         android:layout_below="@+id/googlelogo"
         android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>

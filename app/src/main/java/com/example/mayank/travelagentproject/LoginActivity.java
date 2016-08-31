@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         tablayout=(TabLayout)findViewById(R.id.tablayout);
         mViewPager = (ViewPager) findViewById(R.id.container);
         viewpageradapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewpageradapter.addfragment(new Login(),"Login");
+        viewpageradapter.addfragment(new Login(),"LOGIN");
         viewpageradapter.addfragment(new Signup(),"SIGNUP");
         mViewPager.setAdapter(viewpageradapter);
         tablayout.setupWithViewPager(mViewPager);
