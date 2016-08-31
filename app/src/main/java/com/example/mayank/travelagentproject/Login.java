@@ -1,12 +1,30 @@
 package com.example.mayank.travelagentproject;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -14,16 +32,120 @@ import android.view.ViewGroup;
  */
 public class Login extends android.support.v4.app.Fragment {
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    EditText email,pass;
+    Button login,google,facebook;
+    int flag=0;
+    ProgressDialog progressDialog;
+    ImageView eye;
+    TextView forget;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View view;
+        view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser=firebaseAuth.getCurrentUser();
+
+        if(firebaseUser!=null){
+            Toast.makeText(getContext(),"You are already signed in.",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getContext(),MainActivity.class));
+        }
+
+        eye=(ImageView)view.findViewById(R.id.eye);
+        email=(EditText)view.findViewById(R.id.email);
+        pass=(EditText)view.findViewById(R.id.password);
+        login=(Button)view.findViewById(R.id.login);
+        google=(Button)view.findViewById(R.id.googlelogo);
+        facebook=(Button)view.findViewById(R.id.facebooklogo);
+        forget=(TextView)view.findViewById(R.id.forget);
+
+        eye.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch ( motionEvent.getAction() ) {
+                    case MotionEvent.ACTION_DOWN:
+                        pass.setInputType(InputType.TYPE_CLASS_TEXT);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog=new ProgressDialog(view.getContext());
+                loginuser();
+            }
+        });
+
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                if(!(TextUtils.isEmpty(email.getText()))) {
+
+                    String emailAddress = email.getText().toString();
+
+                    auth.sendPasswordResetEmail(emailAddress)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Check your email to reset your password..", Toast.LENGTH_SHORT).show();
+                                    } else
+                                        Toast.makeText(getContext(), "Incorrect email !", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                else{
+                    Toast.makeText(getContext(), "Fill your email first..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        return view;
+    }
+    public void loginuser(){
+        flag=0;
+
+        checkfornullfields();
+
+        if( (flag==0)){
+            progressDialog.setMessage("Wait for registration..");
+            progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    progressDialog.dismiss();
+                    if (task.isSuccessful()){
+                        Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getContext(),MainActivity.class));
+                    }
+                    else
+                        Toast.makeText(getContext(), "Could not login.Please try again..", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+    public void checkfornullfields(){
+        if(TextUtils.isEmpty(email.getText())){
+            Toast.makeText(getContext(),"Please enter email",Toast.LENGTH_SHORT).show();
+            flag=1;
+        }
+        else if(TextUtils.isEmpty(pass.getText())){
+            Toast.makeText(getContext(),"Please enter password",Toast.LENGTH_SHORT).show();
+            flag=1;
+        }
     }
 
 }

@@ -17,9 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<ModeTransport> list=new ArrayList<ModeTransport>();
-
+    TextView navname;
+    TextView navemail;
+    Toolbar toolbar;
     int flag=0;
     AutoCompleteTextView autoCompleteTextView;
     int [] image={R.drawable.newrailway,R.drawable.newairway,R.drawable.newlocal};
@@ -39,36 +46,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     CoordinatorLayout coordinatorLayout;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        user=firebaseAuth.getCurrentUser();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        if(user!=null){
+            toolbar.setTitle(user.getDisplayName().toString());
+        }
+        else
         toolbar.setTitle("Guest");
+
         setSupportActionBar(toolbar);
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDefaultDisplayHomeAsUpEnabled(true);
         actionBar.show();
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
-
-        Calendar c=Calendar.getInstance();
-        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
-        if(timeOfDay >= 0 && timeOfDay < 12){
-            Snackbar.make(coordinatorLayout, "Good Morning,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        }else if(timeOfDay >= 12 && timeOfDay < 16){
-            Snackbar.make(coordinatorLayout, "Good Afternoon,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        }
-        else if(timeOfDay >= 16 && timeOfDay < 21){
-            Snackbar.make(coordinatorLayout, "Good Evening,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        }else if(timeOfDay >= 21 && timeOfDay < 24){
-            Snackbar.make(coordinatorLayout, "Welcome,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
-        }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,9 +82,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+        navname=(TextView)header.findViewById(R.id.accountname);
+        navemail=(TextView)header.findViewById(R.id.accountemail);
+
+        Calendar c=Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+
+        if(user!=null){
+            navname.setText(user.getDisplayName().toString());
+            navemail.setText(user.getEmail().toString());
+
+            if(timeOfDay >= 0 && timeOfDay < 12){
+                Snackbar.make(coordinatorLayout, "Good Morning "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+            }else if(timeOfDay >= 12 && timeOfDay < 16){
+                Snackbar.make(coordinatorLayout, "Good Afternoon "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+            }
+            else if(timeOfDay >= 16 && timeOfDay < 21){
+                Snackbar.make(coordinatorLayout, "Good Evening "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+            }else if(timeOfDay >= 21 && timeOfDay < 24){
+                Snackbar.make(coordinatorLayout, "Welcome "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+            }
+
+        }
+        else{
+            if(timeOfDay >= 0 && timeOfDay < 12){
+                Snackbar.make(coordinatorLayout, "Good Morning,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+            }else if(timeOfDay >= 12 && timeOfDay < 16){
+                Snackbar.make(coordinatorLayout, "Good Afternoon,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+            }
+            else if(timeOfDay >= 16 && timeOfDay < 21){
+                Snackbar.make(coordinatorLayout, "Good Evening,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+            }else if(timeOfDay >= 21 && timeOfDay < 24){
+                Snackbar.make(coordinatorLayout, "Welcome,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
+            }
+        }
+
+
+
+
 
 
         int count=0;
+
         for(String n:name){
             ModeTransport modeTransport=new ModeTransport(image[count],n);
             list.add(modeTransport);
@@ -92,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setHasFixedSize(true);
         adapter=new ModeAdapter(list,this);
         recyclerView.setAdapter(adapter);
-        }
+
+    }
 
     //******
     // onCreate ends..
@@ -147,7 +193,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.registertravelagent) {
             Intent intent=new Intent(this,LoginActivity.class);
             startActivity(intent);
-        } else if (id == R.id.linking) {
+        }
+        else if(id == R.id.nav_logout){
+            if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+                navname.setText("FirstName LastName");
+                navemail.setText("android.studio@android.com");
+                toolbar.setTitle("Guest");
+                firebaseAuth.signOut();
+                Toast.makeText(MainActivity.this, "You are signed out.", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(MainActivity.this, "Please SignIn First", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.linking) {
 
         } else if (id == R.id.booking) {
 
@@ -157,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_send) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

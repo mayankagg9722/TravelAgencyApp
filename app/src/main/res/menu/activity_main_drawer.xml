@@ -11,6 +11,10 @@
             android:icon="@drawable/user"
             android:title="Registered Travel Agent" />
         <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+        <item
             android:id="@+id/linking"
             android:icon="@drawable/link"
             android:title="Linked States and Cities" />
@@ -30,6 +34,7 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send Us FeedBack" />
+
         </menu>
     </item>
 
