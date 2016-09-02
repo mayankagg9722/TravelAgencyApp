@@ -91,7 +91,7 @@
                 android:hint="Retype-Password"
                 android:id="@+id/repassword"/>
 
-            <TextView
+         <!--   <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -121,6 +121,7 @@
                     android:layout_marginLeft="20dp"
                     android:checked="true" />
             </RadioGroup>
+            -->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

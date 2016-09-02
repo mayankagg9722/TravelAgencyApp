@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,14 +25,24 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -48,25 +60,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CoordinatorLayout coordinatorLayout;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
+        Firebase.setAndroidContext(this);
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
+        Firebase.goOnline();
 
         firebaseAuth=FirebaseAuth.getInstance();
         user=firebaseAuth.getCurrentUser();
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinatorlayout);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
         if(user!=null){
-            toolbar.setTitle(user.getDisplayName().toString());
+                toolbar.setTitle(user.getDisplayName().toString());
         }
-        else
-        toolbar.setTitle("Guest");
+        else {
+            toolbar.setTitle("Guest");
+        }
 
         setSupportActionBar(toolbar);
 
@@ -86,25 +104,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navname=(TextView)header.findViewById(R.id.accountname);
         navemail=(TextView)header.findViewById(R.id.accountemail);
 
+
         Calendar c=Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient=new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                Toast.makeText(MainActivity.this,"Google play services error..",Toast.LENGTH_SHORT).show();
+            }
+        }).addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
 
         if(user!=null){
             navname.setText(user.getDisplayName().toString());
             navemail.setText(user.getEmail().toString());
-
             if(timeOfDay >= 0 && timeOfDay < 12){
-                Snackbar.make(coordinatorLayout, "Good Morning "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
-            }else if(timeOfDay >= 12 && timeOfDay < 16){
-                Snackbar.make(coordinatorLayout, "Good Afternoon "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
-            }
-            else if(timeOfDay >= 16 && timeOfDay < 21){
-                Snackbar.make(coordinatorLayout, "Good Evening "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
-            }else if(timeOfDay >= 21 && timeOfDay < 24){
-                Snackbar.make(coordinatorLayout, "Welcome "+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
-            }
-
+                    Snackbar.make(coordinatorLayout, "Good Morning,"+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+                }else if(timeOfDay >= 12 && timeOfDay < 16){
+                    Snackbar.make(coordinatorLayout, "Good Afternoon,"+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+                }
+                else if(timeOfDay >= 16 && timeOfDay < 21){
+                    Snackbar.make(coordinatorLayout, "Good Evening,"+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+                }else if(timeOfDay >= 21 && timeOfDay < 24){
+                    Snackbar.make(coordinatorLayout, "Welcome,"+user.getDisplayName().toString(), Snackbar.LENGTH_LONG).show();
+                }
         }
         else{
             if(timeOfDay >= 0 && timeOfDay < 12){
@@ -118,11 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Snackbar.make(coordinatorLayout, "Welcome,You Logged In As Guest.", Snackbar.LENGTH_LONG).show();
             }
         }
-
-
-
-
-
 
         int count=0;
 
@@ -195,15 +219,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
         else if(id == R.id.nav_logout){
-            if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+            if(user!= null){
                 navname.setText("FirstName LastName");
                 navemail.setText("android.studio@android.com");
                 toolbar.setTitle("Guest");
                 firebaseAuth.signOut();
-                Toast.makeText(MainActivity.this, "You are signed out.", Toast.LENGTH_SHORT).show();
+
+                 Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+
+                    }
+                });
+
+                Toast.makeText(MainActivity.this, "You are logged out.", Toast.LENGTH_SHORT).show();
+
             }
             else
-                Toast.makeText(MainActivity.this, "Please SignIn First", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Please Sign In First", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.linking) {
 

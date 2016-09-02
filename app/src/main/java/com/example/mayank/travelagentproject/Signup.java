@@ -3,6 +3,7 @@ package com.example.mayank.travelagentproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Criteria;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,13 +24,27 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthProvider;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 
@@ -37,30 +53,51 @@ import com.google.firebase.auth.UserProfileChangeRequest;
  */
 public class Signup extends android.support.v4.app.Fragment {
 
+    private GoogleApiClient mGoogleApiClient;
     EditText fname,lname,email,pass,repass;
     Button signup,google,facebook;
     int flag=0;
-    String signupas="user";
+    //String signupas="user";
     ProgressDialog progressDialog;
-    RadioGroup radiogroup;
+    //RadioGroup radiogroup;
     String password,repassword;
     ImageView eye;
 
     FirebaseAuth firebaseAuth;
+    //FirebaseAuth.AuthStateListener authStateListener;
+    //GoogleApiClient mGoogleApiClient;
+
+    public static final int RC_SIGN_IN=9001;
+    public static final String TAG="tag";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
+
         view=inflater.inflate(R.layout.fragment_signup, container, false);
+
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
+        Firebase.goOnline();
+        Firebase.setAndroidContext(getContext());
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null) {
-            Toast.makeText(getContext(),"You are already signed in.",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getContext(), MainActivity.class));
-        }
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient=new GoogleApiClient.Builder(getContext()).enableAutoManage(Signup.this.getActivity(),1, new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                Toast.makeText(getContext(),"Google play services error..",Toast.LENGTH_SHORT).show();
+            }}).addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
+
+
+//declaring layout objects//
         eye=(ImageView)view.findViewById(R.id.eye);
         fname= (EditText) view.findViewById(R.id.firstname);
         lname=(EditText)view.findViewById(R.id.lastname);
@@ -70,29 +107,22 @@ public class Signup extends android.support.v4.app.Fragment {
         signup=(Button)view.findViewById(R.id.register);
         google=(Button)view.findViewById(R.id.googlelogo);
         facebook=(Button)view.findViewById(R.id.facebooklogo);
-        radiogroup=(RadioGroup)view.findViewById(R.id.radiogroup);
+       /* radiogroup=(RadioGroup)view.findViewById(R.id.radiogroup);
 
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.user:
-                        signupas = "user";
+                        signupas ="user";
                         break;
                     case R.id.traveagent:
-                        signupas = "travelagent";
+                        signupas ="travelagent";
                         break;
                 }
             }
-        });
+        });*/
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialog=new ProgressDialog(view.getContext());
-                registeruser();
-            }
-        });
 
         eye.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -108,6 +138,25 @@ public class Signup extends android.support.v4.app.Fragment {
                 return true;
             }
         });
+
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog=new ProgressDialog(view.getContext());
+                registeruser();
+            }
+        });
+
+
+        google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog=new ProgressDialog(view.getContext());
+                signIn();
+            }
+        });
+
         return view;
     }
 
@@ -116,38 +165,34 @@ public class Signup extends android.support.v4.app.Fragment {
         password=pass.getText().toString();
         repassword=repass.getText().toString();
         checkfornullfields();
-        if( (flag==0)){
+        if( (flag==0)) {
             progressDialog.setMessage("Wait for registration..");
             progressDialog.show();
-
-            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    progressDialog.dismiss();
-                    if (task.isSuccessful()){
-                        Toast.makeText(getContext(), "Successfully Registered..", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getContext(),MainActivity.class));
-                    }
-
-                    else
-                        Toast.makeText(getContext(), "Could not registered.Please try again..", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-           final UserProfileChangeRequest userprofle=new UserProfileChangeRequest.Builder()
-                    .setDisplayName(fname.getText().toString()+" "+lname.getText().toString()).build();
-
-            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    if(firebaseAuth.getCurrentUser()!=null){
-                       FirebaseUser user=firebaseAuth.getCurrentUser();
-                        user.updateProfile(userprofle);
-                    }
-                }
-            });
-
-
+            firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(fname.getText().toString()+" "+lname.getText().toString()).build();
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                progressDialog.dismiss();
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "User profile updated.");
+                                                    startActivity(new Intent(getContext(),MainActivity.class));
+                                                }
+                                            }
+                                        });
+                            }
+                            else{
+                                Toast.makeText(getContext(), "Could not registered.Please try again..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 
@@ -177,5 +222,69 @@ public class Signup extends android.support.v4.app.Fragment {
             flag=1;
         }
     }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    firebaseAuthWithGoogle(account);
+                }
+            }
+        }
+        private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+            //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+            progressDialog.setMessage("Wait..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            firebaseAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                startActivity(new Intent(getContext(),MainActivity.class));
+                            }
+
+                        }
+                    });
+        }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onStop() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
+    }
+
+
 }
+
 
