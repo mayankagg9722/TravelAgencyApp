@@ -102,13 +102,14 @@
         android:id="@+id/googlelogo"
         android:layout_marginTop="20dp"
         android:textSize="15dp"
-        android:drawableLeft="@drawable/google"
+        android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
+        android:paddingLeft="10dp"
         android:background="#ffffff"
         android:layout_below="@+id/textView3"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/facebooklogo" />
 
-    <Button
+        <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login with Facebook"
@@ -117,6 +118,7 @@
         android:textSize="15dp"
         android:textColor="#ffffff"
         android:drawableLeft="@drawable/facebook"
+            android:paddingLeft="20dp"
         android:background="#3b5998"
         android:layout_below="@+id/googlelogo"
         android:layout_centerHorizontal="true" />
