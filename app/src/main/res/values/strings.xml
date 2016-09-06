@@ -109,6 +109,8 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_newlogin">Newlogin</string>
 
+    <string name="facebook_app_id">1672516909733678</string>
+
 </resources>
 
 

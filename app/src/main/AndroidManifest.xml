@@ -42,7 +42,7 @@
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -51,6 +51,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB2ZEKO0go4xqz8UiHPqIkSQbT7OIkvbIw" />
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

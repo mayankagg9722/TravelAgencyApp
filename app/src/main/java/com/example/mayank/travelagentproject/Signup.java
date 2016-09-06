@@ -26,6 +26,15 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,6 +49,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthProvider;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
@@ -55,20 +65,22 @@ public class Signup extends android.support.v4.app.Fragment {
 
     private GoogleApiClient mGoogleApiClient;
     EditText fname,lname,email,pass,repass;
-    Button signup,google,facebook;
+    Button signup,google;
     int flag=0;
-    //String signupas="user";
     ProgressDialog progressDialog;
-    //RadioGroup radiogroup;
     String password,repassword;
     ImageView eye;
 
     FirebaseAuth firebaseAuth;
-    //FirebaseAuth.AuthStateListener authStateListener;
-    //GoogleApiClient mGoogleApiClient;
 
     public static final int RC_SIGN_IN=9001;
     public static final String TAG="tag";
+
+
+    CallbackManager callbackManager;
+    LoginButton facebook;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override
@@ -97,7 +109,6 @@ public class Signup extends android.support.v4.app.Fragment {
             }}).addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
 
 
-//declaring layout objects//
         eye=(ImageView)view.findViewById(R.id.eye);
         fname= (EditText) view.findViewById(R.id.firstname);
         lname=(EditText)view.findViewById(R.id.lastname);
@@ -106,22 +117,8 @@ public class Signup extends android.support.v4.app.Fragment {
         repass=(EditText)view.findViewById(R.id.repassword);
         signup=(Button)view.findViewById(R.id.register);
         google=(Button)view.findViewById(R.id.googlelogo);
-        facebook=(Button)view.findViewById(R.id.facebooklogo);
-       /* radiogroup=(RadioGroup)view.findViewById(R.id.radiogroup);
 
-        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i) {
-                    case R.id.user:
-                        signupas ="user";
-                        break;
-                    case R.id.traveagent:
-                        signupas ="travelagent";
-                        break;
-                }
-            }
-        });*/
+        facebook=(LoginButton)view.findViewById(R.id.facebooklogo);
 
 
         eye.setOnTouchListener(new View.OnTouchListener() {
@@ -154,6 +151,14 @@ public class Signup extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 progressDialog=new ProgressDialog(view.getContext());
                 signIn();
+            }
+        });
+
+
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext()," Click LogIn Tab",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -264,16 +269,18 @@ public class Signup extends android.support.v4.app.Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         if (mGoogleApiClient != null)
             mGoogleApiClient.connect();
+        super.onStart();
+
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mGoogleApiClient.stopAutoManage(getActivity());
         mGoogleApiClient.disconnect();
+        super.onDestroy();
+
     }
 
     @Override
@@ -283,7 +290,6 @@ public class Signup extends android.support.v4.app.Fragment {
         }
         super.onStop();
     }
-
 
 }
 
