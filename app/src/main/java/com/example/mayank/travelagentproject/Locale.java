@@ -42,7 +42,7 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
     Button button;
     Button getlocation,buttonlocation;
     static EditText datefield,timefield;
-    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop=Down";
+    String destination,cabtype="AC",cabtravelpref="Individual",cabsize="Mini",cabtime="Drop-Down";
     int flag=0;
     ImageButton done;
     String carsize="mini";
@@ -142,20 +142,16 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
             }
         });
-
-        destination=uname.getText().toString()+","+uaddress.getText().toString();
-
     }
 
     public void openTACardView(View view)   {
-        checknullfields()
-        ;
+        destination=uname.getText().toString()+","+uaddress.getText().toString();
+        checknullfields();
         if(flag==1) {
             Toast.makeText(this, "Fill Form Completely", Toast.LENGTH_SHORT).show();
             flag=0;
         }
         else {
-
             Intent i = new Intent(this, TravelAgents.class);
 
             Bundle bundle=new Bundle();

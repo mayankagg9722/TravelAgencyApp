@@ -70,6 +70,7 @@ public class Login extends android.support.v4.app.Fragment {
     public static final String TAG="tag";
     CallbackManager callbackManager;
     LoginButton facebook;
+    static int t=0;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -203,26 +204,6 @@ public class Login extends android.support.v4.app.Fragment {
 
                     }
                 });
-
-               /* facebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        progressDialog.setMessage("Wait..");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-
-                    }
-                });*/
             }
         });
         return view;
@@ -343,6 +324,7 @@ public class Login extends android.support.v4.app.Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            t=1;
                             startActivity(new Intent(getContext(),MainActivity.class));
                         }
                     }

@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Firebase.setAndroidContext(this);
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
         Firebase.goOnline();
 
         firebaseAuth=FirebaseAuth.getInstance();
@@ -240,8 +239,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
+                if(Login.t==1){
                 LoginManager.getInstance().logOut();
-
+                Login.t=0;
+                }
 
                 Toast.makeText(MainActivity.this, "You are logged out.", Toast.LENGTH_SHORT).show();
 
@@ -252,6 +253,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.linking) {
 
         } else if (id == R.id.booking) {
+
+            if(firebaseAuth.getCurrentUser()==null){
+                Toast.makeText(MainActivity.this, "Please Sign In First", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent intent=new Intent(this,ShowBooking.class);
+                startActivity(intent);
+            }
 
         } else if (id == R.id.nav_share) {
 

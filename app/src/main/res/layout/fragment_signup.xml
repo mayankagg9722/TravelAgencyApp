@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mayank.travelagentproject.Signup"
-    android:background="@color/windowbackground">
+    android:background="#fffde7">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -159,6 +159,7 @@
         android:textSize="10dp"
         android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
         android:paddingRight="20dp"
+        android:textStyle="italic"
         android:background="#ffffff"
         android:layout_gravity="center"/>
 

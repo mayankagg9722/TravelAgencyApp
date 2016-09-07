@@ -14,6 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by mayank on 10-08-2016.
  */
+
 public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> {
 
 
