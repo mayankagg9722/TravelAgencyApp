@@ -6,10 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +39,8 @@ public class FinalForm extends AppCompatActivity {
     static  Firebase firebase;
     String uid;
     Button booknow;
+    String bookingid;
+    String currentdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class FinalForm extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Travel Agents");
 
+
+        travelemail=(TextView)findViewById(R.id.travelemail);
 
         booknow=(Button)findViewById(R.id.booknow);
         travelname=(TextView)findViewById(R.id.travelagentname);
@@ -67,6 +74,7 @@ public class FinalForm extends AppCompatActivity {
 
         Bundle bundle=getIntent().getExtras();
 
+        travelemail.setText(bundle.getString("agentemail"));
         travelname.setText(bundle.getString("agentname"));
         travellocation.setText(bundle.getString("agentaddress"));
         travelcontact.setText(bundle.getString("agentcontact"));
@@ -114,8 +122,8 @@ public class FinalForm extends AppCompatActivity {
                 if(firebaseUser!=null){
                     uid=firebaseUser.getUid();
 
-                    String currentdate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-                    String bookingid=uid.substring(2,8)+ String.valueOf(System.currentTimeMillis()/10000);
+                    currentdate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                    bookingid=uid.substring(2,8)+ String.valueOf(System.currentTimeMillis()/10000);
 
                     YourBookingPOJO yourBookingPOJO=new YourBookingPOJO(
                             bookingid,
@@ -145,9 +153,38 @@ public class FinalForm extends AppCompatActivity {
                                 Toast.makeText(FinalForm.this,"Unsuccessfull,Please Try Again..",Toast.LENGTH_SHORT).show();
                             }
                             else {
+
                                 Toast.makeText(FinalForm.this, "Booking Successfull..", Toast.LENGTH_SHORT).show();
+
                                 Intent intent=new Intent(FinalForm.this,MainActivity.class);
                                 startActivity(intent);
+
+                                Toast toast=Toast.makeText(FinalForm.this, "Sending Email For Booking", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,0);
+                                toast.show();
+
+                                Intent intent1= new Intent(Intent.ACTION_SEND);
+                                intent1.putExtra(Intent.EXTRA_EMAIL,new String[]{travelemail.getText().toString()});
+                                intent1.putExtra(Intent.EXTRA_SUBJECT,"Booking By:"+username.getText());
+                                intent1.putExtra(Intent.EXTRA_TEXT,
+                                        "\nBooking id: "+bookingid+
+                                        "\nBooking Date: "+currentdate+
+                                        "\nUsername: "+username.getText().toString()+
+                                        "\nUseraddress: "+useraddress.getText().toString()+
+                                        "\nUsercontact: "+usercontact.getText().toString()+
+                                        "\nUseremail: "+useremail.getText().toString()+
+                                        "\nFrom: "+userfrom.getText().toString()+
+                                        "\nTo: "+userto.getText().toString()+
+                                        "\nTravel Date: "+date.getText().toString()+
+                                        "\nTravel Time: "+time.getText().toString()+
+                                        "\nShare/Ind: "+pref.getText().toString()+
+                                        "\nCar Type: "+cartype.getText().toString()+
+                                        "\nCar Size: "+carsize.getText().toString()+
+                                        "\nWait/drop: "+drop.getText().toString()
+                                        );
+                                intent1.setType("message/rfc822");
+                                startActivity(intent1);
+
                             }
                             pd.dismiss();
                         }

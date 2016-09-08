@@ -85,6 +85,7 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
                     bundle.putString("agentname",obj.tAName);
                     bundle.putString("agentaddress",obj.tAAddress);
                     bundle.putString("agentcontact",obj.tAnumber);
+                    bundle.putString("agentemail",obj.tEmail);
                     intent.putExtras(bundle);
                     ctx.startActivity(intent);
 

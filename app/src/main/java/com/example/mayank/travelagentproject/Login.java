@@ -89,7 +89,6 @@ public class Login extends android.support.v4.app.Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
         Firebase.goOnline();
         Firebase.setAndroidContext(getContext());
 

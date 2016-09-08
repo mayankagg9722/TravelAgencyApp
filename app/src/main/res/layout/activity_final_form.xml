@@ -123,11 +123,12 @@
                         />
 
                     <TextView
+                        android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="travelagent@gmail.com" />
+                        android:id="@+id/travelemail"
+                        android:text="mayankagg9722@gmail.com" />
 
                 </LinearLayout>
 
