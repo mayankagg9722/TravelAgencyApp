@@ -50,6 +50,7 @@ public class ShowBooking extends AppCompatActivity {
 
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
+        pd.setCancelable(false);
         pd.show();
 
 

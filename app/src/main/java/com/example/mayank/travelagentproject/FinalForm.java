@@ -1,8 +1,12 @@
 package com.example.mayank.travelagentproject;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -88,12 +92,33 @@ public class FinalForm extends AppCompatActivity {
         booknow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showalertdialog();
+            }
+        });
+
+    }
+
+    public void showalertdialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(FinalForm.this);
+        builder.setTitle("Booking");
+        builder.setCancelable(false);
+        builder.setMessage("Are you sure you want to book cab?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                final ProgressDialog pd = new ProgressDialog(FinalForm.this);
+                pd.setMessage("Please Wait...");
+                pd.setCancelable(false);
+                pd.show();
+
                 if(firebaseUser!=null){
                     uid=firebaseUser.getUid();
 
                     String currentdate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                    String bookingid=uid.substring(2,8)+ String.valueOf(System.currentTimeMillis()/10000);
 
                     YourBookingPOJO yourBookingPOJO=new YourBookingPOJO(
+                            bookingid,
                             currentdate,
                             travelname.getText().toString(),
                             travellocation.getText().toString(),
@@ -116,13 +141,15 @@ public class FinalForm extends AppCompatActivity {
 
                         @Override
                         public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                            if(firebaseError!=null)
+                            if(firebaseError!=null){
                                 Toast.makeText(FinalForm.this,"Unsuccessfull,Please Try Again..",Toast.LENGTH_SHORT).show();
+                            }
                             else {
                                 Toast.makeText(FinalForm.this, "Booking Successfull..", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(FinalForm.this,MainActivity.class);
                                 startActivity(intent);
                             }
+                            pd.dismiss();
                         }
                     });
                 }
@@ -134,5 +161,11 @@ public class FinalForm extends AppCompatActivity {
             }
         });
 
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+             dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }

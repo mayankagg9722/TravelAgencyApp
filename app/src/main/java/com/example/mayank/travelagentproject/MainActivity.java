@@ -1,9 +1,13 @@
 package com.example.mayank.travelagentproject;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseUser user;
     GoogleApiClient mGoogleApiClient;
 
+    Boolean doublepress= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        if(user!=null){
-                toolbar.setTitle(user.getDisplayName().toString());
-        }
-        else {
-            toolbar.setTitle("Guest");
-        }
+        toolbar.setTitle("CAB SERVICES");
 
         setSupportActionBar(toolbar);
 
@@ -168,7 +168,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter=new ModeAdapter(list,this);
         recyclerView.setAdapter(adapter);
 
+
     }
+
+
 
     //******
     // onCreate ends..
@@ -179,7 +182,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(doublepress){
+                super.onBackPressed();
+                return;
+            }
+            doublepress=true;
+            Toast.makeText(MainActivity.this,"Press Again To Exit",Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doublepress=false;
+                }
+            },2000);
         }
     }
 
@@ -326,4 +341,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         alertBuilder.create().show();
     }
+
+
 }

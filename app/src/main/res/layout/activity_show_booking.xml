@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Booking Information"
                 android:textSize="30dp"
-                android:textColor="#000000"
+                android:textColor="#ffffff"
                 android:textStyle="italic|bold"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/textbook"/>
