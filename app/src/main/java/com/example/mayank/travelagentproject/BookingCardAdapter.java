@@ -16,6 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.ArrayList;
 
 /**
@@ -30,6 +36,8 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
     boolean isOpen = false;
 
     Animation fabOpen, fabClose, fabClockwise, fabAnticlockwise;
+
+    Firebase firebase;
 
     public BookingCardAdapter(ArrayList<YourBookingPOJO> yourlist, Context context) {
         this.yourlist = yourlist;
@@ -80,7 +88,7 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
         TextView traveltype;
         TextView travelagent;
         LinearLayout linearLayout;
-        FloatingActionButton fabPlus, fabloc, fabcall;
+        FloatingActionButton fabPlus, fabloc, fabcall,fabcancel;
 
         Context ctx;
         ArrayList<YourBookingPOJO> list = new ArrayList<YourBookingPOJO>();
@@ -104,6 +112,8 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
             fabPlus = (FloatingActionButton) itemView.findViewById(R.id.floatactionbutton);
             fabloc = (FloatingActionButton) itemView.findViewById(R.id.fab_btn_loc);
             fabcall = (FloatingActionButton) itemView.findViewById(R.id.fab_btn_call);
+
+           // fabcancel = (FloatingActionButton) itemView.findViewById(R.id.cancelbooking);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearlayoutbooking);
 
             fabOpen = AnimationUtils.loadAnimation(ctx, R.anim.fab_open);
@@ -169,6 +179,37 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
                             }
                         }
                     });
+
+
+/*
+                    fabcancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            FinalForm.firebase=new Firebase("https://travelagentproject-40e3a.firebaseio.com/");
+                            FinalForm.firebase.addListenerForSingleValueEvent
+                                    (new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    if(dataSnapshot.child("Booking Information").child("bookingid").getValue().equals(yourBookingPOJO.getBookingid())){
+                                        FinalForm.firebase.child("Booking Information").child(dataSnapshot.getKey()).setValue(null);
+                                    }
+
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
+                        }
+                    });
+
+*/
+
                 }
             });
 
