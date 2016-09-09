@@ -126,6 +126,7 @@ public class FinalForm extends AppCompatActivity {
                     bookingid=uid.substring(2,8)+ String.valueOf(System.currentTimeMillis()/10000);
 
                     YourBookingPOJO yourBookingPOJO=new YourBookingPOJO(
+                            travelemail.getText().toString(),
                             bookingid,
                             currentdate,
                             travelname.getText().toString(),
@@ -159,7 +160,7 @@ public class FinalForm extends AppCompatActivity {
                                 Intent intent=new Intent(FinalForm.this,MainActivity.class);
                                 startActivity(intent);
 
-                                Toast toast=Toast.makeText(FinalForm.this, "Sending Email For Booking", Toast.LENGTH_SHORT);
+                                Toast toast=Toast.makeText(FinalForm.this, "Send Email To Confirm Booking", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,0);
                                 toast.show();
 
@@ -191,6 +192,7 @@ public class FinalForm extends AppCompatActivity {
                     });
                 }
                 else{
+                    pd.dismiss();
                     Toast.makeText(FinalForm.this,"Please Signin First..",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(FinalForm.this,LoginActivity.class);
                     startActivity(intent);

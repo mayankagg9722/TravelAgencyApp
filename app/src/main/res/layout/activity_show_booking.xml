@@ -44,5 +44,20 @@
         android:layout_weight="10"
         android:layout_below="@id/cardbookinglayout"
         android:id="@+id/recyclerview"/>
+
+        <TextView
+            android:id="@+id/nobooking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have not booked anything yet."
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:textColor="#000000"
+            android:textStyle="italic|bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
+
     </RelativeLayout>
 </ScrollView>

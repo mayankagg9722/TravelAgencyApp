@@ -241,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.nav_logout){
             if(user!= null){
-                navname.setText("FirstName LastName");
-                navemail.setText("android.studio@android.com");
+                navname.setText("Guest");
+                navemail.setText("No Email,Register To Our App.");
                 toolbar.setTitle("Guest");
                 firebaseAuth.signOut();
 

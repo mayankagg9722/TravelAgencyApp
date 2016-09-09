@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShowBooking extends AppCompatActivity {
 
@@ -24,8 +27,7 @@ public class ShowBooking extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     YourBookingPOJO details;
-    TextView yourbookingtext;
-
+    TextView nobooking;
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -41,17 +43,29 @@ public class ShowBooking extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("Your Bookings");
 
+
+        nobooking=(TextView)findViewById(R.id.nobooking);
+        nobooking.setVisibility(View.INVISIBLE);
+
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Please Wait...");
+        pd.show();
+
         recyclerView=(RecyclerView)findViewById(R.id.recyclerview);
         layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
         adapter=new BookingCardAdapter(list,this);
         recyclerView.setAdapter(adapter);
 
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Please Wait...");
-        pd.setCancelable(false);
-        pd.show();
+        //Log.v("adapter:", String.valueOf(recyclerView.getChildCount()));
+        if(adapter.getItemCount()==0){
+            nobooking.setVisibility(View.VISIBLE);
+        }
+        else {
+            nobooking.setVisibility(View.INVISIBLE);
+        }
 
 
         firebaseAuth=FirebaseAuth.getInstance();
@@ -69,7 +83,18 @@ public class ShowBooking extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(ShowBooking.this, "You have not booked anything yet.", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
                     }
+                }
+                else{
+                    Toast.makeText(ShowBooking.this, "You have not booked anything yet.", Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }
+                if(adapter.getItemCount()==0){
+                    nobooking.setVisibility(View.VISIBLE);
+                }
+                else {
+                    nobooking.setVisibility(View.INVISIBLE);
                 }
                 pd.dismiss();
                 }
@@ -80,6 +105,12 @@ public class ShowBooking extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                if(adapter.getItemCount()==0){
+                    nobooking.setVisibility(View.VISIBLE);
+                }
+                else {
+                    nobooking.setVisibility(View.INVISIBLE);
+                }
 
             }
 

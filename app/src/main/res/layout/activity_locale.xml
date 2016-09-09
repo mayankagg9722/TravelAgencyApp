@@ -59,8 +59,8 @@
             android:layout_below="@+id/email"
             android:layout_alignParentStart="true"
             android:hint="Address"
-            android:layout_alignEnd="@+id/details"
-            android:layout_alignBottom="@+id/button" />
+            android:layout_alignBottom="@+id/button"
+            android:layout_alignEnd="@+id/donetwo" />
 
         <Button
             android:layout_width="wrap_content"
@@ -117,9 +117,9 @@
             android:hint="From"
             android:id="@+id/autoCompleteTextViewfrom"
             android:layout_alignBottom="@+id/getlocation"
-            android:layout_alignEnd="@+id/details"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/getlocation" />
+            android:layout_alignTop="@+id/getlocation"
+            android:layout_alignEnd="@+id/donetwo" />
 
         <Button
             android:layout_width="wrap_content"
@@ -198,7 +198,7 @@
             android:enabled="false"
             android:layout_below="@+id/addresspicked"
             android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/details" />
+            android:layout_toStartOf="@+id/date" />
 
         <Button
             android:layout_width="wrap_content"
@@ -227,7 +227,8 @@
             android:layout_below="@+id/datetext"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/date"
-            android:hint="20:00"/>
+            android:hint="20:00"
+            android:layout_alignEnd="@+id/details" />
 
         <Button
             android:layout_width="wrap_content"

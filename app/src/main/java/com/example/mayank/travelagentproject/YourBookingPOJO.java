@@ -24,13 +24,15 @@ public class YourBookingPOJO {
     String carsize;
     String bookingdate;
     String bookingid;
+    String travelemail;
 
     public YourBookingPOJO(){}
 
-    public YourBookingPOJO(String bookingid,String bookingdate,String agentname, String agentaddress, String agentcontact, String username,
+    public YourBookingPOJO(String travelemail,String bookingid,String bookingdate,String agentname, String agentaddress, String agentcontact, String username,
                            String useraddress, String usercontact, String useremail, String from, String to,
                            String date, String time, String travelpref, String cartype, String carsize,
                            String cabtime, String userid) {
+        this.travelemail=travelemail;
         this.bookingid=bookingid;
         this.bookingdate=bookingdate;
         this.agentname = agentname;
@@ -51,6 +53,7 @@ public class YourBookingPOJO {
         this.userid = userid;
     }
 
+    public String getTravelemail(){return travelemail;}
     public String getBookingid(){return bookingid;}
     public String getBookingdate(){return bookingdate;}
     public String getAgentaddress() {
@@ -116,4 +119,6 @@ public class YourBookingPOJO {
     public String getUsername() {
         return username;
     }
+
+
 }
