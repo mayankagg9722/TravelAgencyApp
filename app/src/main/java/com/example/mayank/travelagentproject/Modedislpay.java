@@ -1,5 +1,6 @@
 package com.example.mayank.travelagentproject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -421,10 +423,15 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         }
     }
     public void dateenter(View view){
+        InputMethodManager imm = (InputMethodManager)getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         DatePicker datePicker=new DatePicker();
         datePicker.show(getSupportFragmentManager(),"date");
     }
     public void timeset(View view){
+        InputMethodManager imm = (InputMethodManager)getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
         TimePicker timePicker=new TimePicker();
         timePicker.show(getSupportFragmentManager(),"time");
 

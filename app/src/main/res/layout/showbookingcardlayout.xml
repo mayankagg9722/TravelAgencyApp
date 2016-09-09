@@ -14,7 +14,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:layout_marginBottom="5dp"
-            android:backgroundTint="#4CAF50">
+            android:background="#fffde7">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Booking Date"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:textStyle="bold|italic"
                 android:textSize="20dp"/>
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Date"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:id="@+id/bookingdate"
                 android:textSize="15dp"/>
         </LinearLayout>
@@ -59,13 +59,13 @@
                 android:layout_marginTop="2dp">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_height="wrap_content"
                     android:text="Booking ID"
                     android:textStyle="bold|italic"
                     android:textSize="20dp"/>
                 <TextView
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -86,7 +86,7 @@
                 android:orientation="vertical">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Passenger Name:"
@@ -95,7 +95,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -108,25 +108,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
             <TextView
 
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="From"
+                android:text="From:"
                 android:textStyle="bold|italic"
                 android:textSize="20dp"/>
             <TextView
 
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -138,19 +137,19 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginTop="15dp">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TO"
+                    android:text="TO:"
                     android:textStyle="bold|italic"
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -173,7 +172,7 @@
                 android:layout_weight="1">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Travel Date"
@@ -181,7 +180,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -196,7 +195,7 @@
                 android:layout_marginTop="10dp">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Travel Time"
@@ -204,7 +203,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -221,7 +220,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CAB"
@@ -248,7 +247,7 @@
                 android:layout_weight="1">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Car Size"
@@ -256,7 +255,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -272,7 +271,7 @@
                 android:layout_marginTop="15dp">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Car Type"
@@ -280,7 +279,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -303,7 +302,7 @@
                 android:layout_marginTop="10dp">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Travel Pref."
@@ -311,7 +310,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -326,7 +325,7 @@
                 android:layout_marginTop="10dp">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Travel Type"
@@ -334,7 +333,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -357,7 +356,7 @@
                 android:orientation="vertical">
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Travel Agent"
@@ -365,7 +364,7 @@
                     android:textSize="20dp"/>
                 <TextView
 
-                    android:textColor="#ffffff"
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -387,7 +386,7 @@
                               android:src="@drawable/phone"
                               android:layout_marginEnd="35dp"
                               android:elevation="6dp"
-                              app:backgroundTint="#FF5722"
+                              app:backgroundTint="#FBC02D"
                               app:pressedTranslationZ="12dp"
                               android:layout_alignParentTop="true"
                               android:layout_toStartOf="@+id/floatactionbutton"
@@ -398,7 +397,7 @@
                           android:layout_height="wrap_content"
                           android:layout_gravity="center"
                           android:id="@+id/floatactionbutton"
-                          app:backgroundTint="#FF5722"
+                          app:backgroundTint="#FBC02D"
                           android:src="@drawable/infofloat"
                           android:elevation="6dp"
                           app:pressedTranslationZ="12dp"
@@ -410,7 +409,7 @@
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:src="@drawable/floatlocation"
-                              app:backgroundTint="#FF5722"
+                              app:backgroundTint="#FBC02D"
                               android:elevation="6dp"
                               android:layout_marginStart="35dp"
                               app:pressedTranslationZ="12dp"
@@ -425,7 +424,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:id="@+id/cancelbooking"
-                app:backgroundTint="#ffffff"
+                app:backgroundTint="#ff1744"
                 android:src="@drawable/cancelbooking"
                 android:elevation="6dp"
                 app:pressedTranslationZ="12dp"

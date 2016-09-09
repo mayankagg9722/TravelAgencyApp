@@ -165,6 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Calender "
+            android:textSize="15dp"
             android:drawableLeft="@drawable/date"
             android:textColor="#ffffff"
             android:textStyle="italic"

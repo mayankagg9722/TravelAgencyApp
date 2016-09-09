@@ -163,6 +163,14 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
                         }
                     });
 
+                    fabPlus.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            Toast.makeText(ctx,"Press To Call And Locate Travel Agent.",Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                    });
+
                     fabPlus.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -184,6 +192,15 @@ public class BookingCardAdapter extends RecyclerView.Adapter<BookingCardAdapter.
                                 fabcall.setClickable(true);
                                 isOpen = true;
                             }
+                        }
+                    });
+
+
+                    fabcancel.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            Toast.makeText(ctx,"Press To Cancel Booking.",Toast.LENGTH_SHORT).show();
+                            return false;
                         }
                     });
 
