@@ -1,11 +1,9 @@
 package com.example.mayank.travelagentproject;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.Network;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,12 +18,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -171,8 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
     //******
     // onCreate ends..
     //******
@@ -239,6 +237,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent=new Intent(this,LoginActivity.class);
             startActivity(intent);
         }
+        else if(id==R.id.confirmation){
+            Intent intent=new Intent(this,TravelConfirmation.class);
+            startActivity(intent);
+        }
         else if(id == R.id.nav_logout){
             if(user!= null){
                 navname.setText("Guest");
@@ -266,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, "Please Sign In First", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.linking) {
+          startActivity(new Intent(this,LinkedCities.class));
 
         } else if (id == R.id.booking) {
 
@@ -277,11 +280,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.contact) {
 
+            AlertDialog.Builder alert=new AlertDialog.Builder(this);
+            final String[] phone={"9585418609","8860729957","9654775162"};
+            alert.setTitle("Helpline Numbers:");
+            alert.setItems(phone, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent=new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone[i].toString()));
+                    startActivity(intent);
+                }
+            });
+            alert.create().show();
+        }
+        else if (id == R.id.nav_share) {
+            Toast.makeText(MainActivity.this, "Barcode will be given soon.", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
 
+            Intent intent=new Intent(Intent.ACTION_SEND);
+            intent.putExtra(intent.EXTRA_EMAIL,new String[]{"mayankagg9722@gmail.com"});
+            intent.putExtra(intent.EXTRA_SUBJECT,"Feedback By:"+navname.getText());
+            intent.setType("message/rfc822");
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

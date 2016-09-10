@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.mayank.travelagentproject.FinalForm">
+    tools:context="com.example.mayank.travelagentproject.FinalForm"
+    android:background="#fffde7">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -368,7 +369,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:cardBackgroundColor="#F1F1F2"
+            app:cardBackgroundColor="#fffde7"
             app:cardCornerRadius="8dp">
 
             <LinearLayout

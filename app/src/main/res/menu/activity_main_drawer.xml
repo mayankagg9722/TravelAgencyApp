@@ -7,11 +7,6 @@
             android:icon="@drawable/travelagent"
             android:title="Registered User" />
         <item
-            android:id="@+id/registertravelagent"
-            android:icon="@drawable/user"
-            android:title="Registered Travel Agent" />
-
-        <item
             android:id="@+id/booking"
             android:icon="@drawable/booking"
             android:title="My Bookings" />
@@ -20,15 +15,40 @@
             android:icon="@drawable/link"
             android:title="Linked States and Cities" />
 
+    </group>
+
+    <item android:title="Travel Agents">
+    <menu>
+    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
+            android:id="@+id/registertravelagent"
+            android:icon="@drawable/user"
+            android:title="Registered Travel Agent" />
+
+        <item
+            android:id="@+id/confirmation"
+            android:icon="@drawable/mailnav"
+            android:title="Send Confirmation" />
 
     </group>
+    </menu>
+
+        <item android:title="Logout">
+            <menu>
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </menu>
+        </item>
+    </item>
 
     <item android:title="Communicate">
         <menu>
+            <item
+                android:id="@+id/contact"
+                android:icon="@drawable/contactnav"
+                android:title="Call Us" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
