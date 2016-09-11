@@ -1,6 +1,7 @@
 package com.example.mayank.travelagentproject;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,12 @@ public class TravelConfirmation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_confirmation);
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+        actionBar.show();
+
+
         email=(EditText)findViewById(R.id.custemail);
         carname=(EditText)findViewById(R.id.carname);
         carno=(EditText)findViewById(R.id.carnumber);

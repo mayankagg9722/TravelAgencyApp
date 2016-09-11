@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     CoordinatorLayout coordinatorLayout;
     FirebaseAuth firebaseAuth;
-    FirebaseUser user;
+    static FirebaseUser user;
     GoogleApiClient mGoogleApiClient;
 
     Boolean doublepress= false;
@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.nav_logout){
             if(user!= null){
+                user=null;
                 navname.setText("Guest");
                 navemail.setText("No Email,Register To Our App.");
                 toolbar.setTitle("Guest");
@@ -257,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
 
                 if(Login.t==1){
+                user=null;
                 LoginManager.getInstance().logOut();
                 Login.t=0;
                 }

@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 /**
@@ -26,6 +31,7 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> 
         this.modelist = mode;
         this.ctx=context;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,21 +67,26 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> 
         }
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            ModeTransport modeTransport = this.list.get(position);
+            if(MainActivity.user!=null){
+                int position = getAdapterPosition();
+                ModeTransport modeTransport = this.list.get(position);
 
-            if(modeTransport.getName().equals("Locale")) {
-                Intent intent = new Intent(ctx, Locale.class);
-                ctx.startActivity(intent);
-            }
-            else {
-                if (start) {
-                    Intent intent = new Intent(ctx, Modedislpay.class);
-                    intent.putExtra("mode", modeTransport.getName());
+                if(modeTransport.getName().equals("Locale")) {
+                    Intent intent = new Intent(ctx, Locale.class);
                     ctx.startActivity(intent);
-                } else {
-                    Toast.makeText(ctx, "Please First Enter Location At Top", Toast.LENGTH_SHORT).show();
                 }
+                else {
+                    if (start) {
+                        Intent intent = new Intent(ctx, Modedislpay.class);
+                        intent.putExtra("mode", modeTransport.getName());
+                        ctx.startActivity(intent);
+                    } else {
+                        Toast.makeText(ctx, "Please First Enter Location At Top", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            else{
+                Toast.makeText(ctx, "Please Login to book a cab.", Toast.LENGTH_SHORT).show();
             }
         }
     }

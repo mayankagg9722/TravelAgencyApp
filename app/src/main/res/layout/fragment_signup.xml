@@ -18,7 +18,8 @@
         android:layout_marginTop="20dp"
         android:layout_above="@+id/textView3"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="3dp">
+        android:layout_marginBottom="3dp"
+        android:backgroundTint="#ffffff">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -60,8 +61,8 @@
                 android:hint="Email"
                 android:id="@+id/email"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
                 android:layout_marginLeft="20dp"
@@ -91,37 +92,6 @@
                 android:hint="Retype-Password"
                 android:id="@+id/repassword"/>
 
-         <!--   <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Sign Up As"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="20dp"/>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:id="@+id/radiogroup">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/traveagent"
-                    android:text="Travel Agent"
-                    />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User"
-                    android:id="@+id/user"
-                    android:layout_marginLeft="20dp"
-                    android:checked="true" />
-            </RadioGroup>
-            -->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -136,10 +106,11 @@
 </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="OR"
+        android:gravity="center"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"

@@ -43,7 +43,7 @@
                     android:id="@+id/email"/>
                 <LinearLayout
                     android:singleLine="true"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <EditText
@@ -84,11 +84,12 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginTop="15dp"
         android:text="OR"
+        android:gravity="center"
         android:textSize="25dp"
         android:textStyle="italic|bold"
         android:id="@+id/textView3"
@@ -101,13 +102,15 @@
         android:layout_height="wrap_content"
         android:text="login with Google"
         android:id="@+id/googlelogo"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="39dp"
         android:textSize="10dp"
         android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
         android:textStyle="italic"
         android:background="#ffffff"
         android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/facebooklogo"
         android:layout_alignStart="@+id/facebooklogo"
+        android:layout_alignRight="@+id/facebooklogo"
         android:layout_alignEnd="@+id/facebooklogo" />
 
 
