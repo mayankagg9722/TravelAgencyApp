@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int flag=0;
     AutoCompleteTextView autoCompleteTextView;
     int [] image={R.drawable.newrailway,R.drawable.newairway,R.drawable.newlocal};
-    String [] name={"Railways","Airways","Locale"};
+    String [] name={"Railways","Airport","Locale"};
 
 
     CoordinatorLayout coordinatorLayout;

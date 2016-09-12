@@ -7,18 +7,17 @@
     android:paddingTop="10dp"
     android:layout_height="match_parent"
     tools:context="com.example.mayank.travelagentproject.SplashScreen"
-    android:background="#ffffff">
+    android:background="#ffef96">
     <ImageView
         android:paddingTop="20dp"
         android:id="@+id/splashimage"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/splashobject"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp" />
+        android:src="@drawable/logoforapp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
+   <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -30,5 +29,5 @@
         android:id="@+id/textView2"
         android:layout_above="@+id/splashimage"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp" />
+        android:layout_marginBottom="39dp" />-->
 </RelativeLayout>

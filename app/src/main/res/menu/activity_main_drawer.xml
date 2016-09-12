@@ -32,7 +32,7 @@
 
     </group>
     </menu>
-
+</item>
         <item android:title="Logout">
             <menu>
                 <item
@@ -41,7 +41,6 @@
                     android:title="Logout" />
             </menu>
         </item>
-    </item>
 
     <item android:title="Communicate">
         <menu>
