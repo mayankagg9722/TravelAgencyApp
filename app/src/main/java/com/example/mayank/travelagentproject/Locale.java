@@ -39,6 +39,8 @@ import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Locale extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -55,6 +57,8 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
     private GoogleApiClient mGoogleApiClient;
     boolean enabled;
     ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,16 @@ public class Locale extends AppCompatActivity implements GoogleApiClient.OnConne
 
         datefield=(EditText)findViewById(R.id.datetext);
         timefield=(EditText)findViewById(R.id.timetext);
+
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        user=firebaseAuth.getCurrentUser();
+
+        if(user!=null){
+            name.setText(user.getDisplayName().toString());
+            email.setText(user.getEmail().toString());
+        }
+
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)

@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -36,6 +37,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -57,6 +60,8 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
     boolean enabled;
     ProgressDialog progressDialog;
     Button getlocation,button;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,15 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
         address=(EditText)findViewById(R.id.address);
         phone=(EditText)findViewById(R.id.phone);
         button=(Button)findViewById(R.id.button);
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        user=firebaseAuth.getCurrentUser();
+
+        if(user!=null){
+            name.setText(user.getDisplayName().toString());
+            email.setText(user.getEmail().toString());
+        }
+
 
         datefield=(EditText)findViewById(R.id.datetext);
         timefield=(EditText)findViewById(R.id.timetext);
@@ -181,7 +195,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
 
         //######################################## OPENING LIST ACTIVITY#################################################
 
-        else if(mode.equals("Airways")){
+        else if(mode.equals("Airport")){
             if(to.equals("Hyderabad")){
                 String[]name={"Airport Name:\tRajiv Gandhi International Airport\nAirport code:\tHYD"};
                 arrayAdapter=new ArrayAdapter(this,R.layout.row_layout,R.id.rowlayouttext,name);
@@ -235,11 +249,13 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
             }
         }
 
+
         spinner.setAdapter(arrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.v("spinner",adapterView.getItemAtPosition(i).toString());
                 if((mode.equals("Airways")&&(to.equals("Rameshwaram")||to.equals("Erode")||to.equals("Ooty")||to.equals("Kodaikanal")||to.equals("Vellore"))))
                     Toast.makeText(getApplicationContext(),"Please Select Specified City and then try...",Toast.LENGTH_SHORT).show();
                 else
@@ -513,7 +529,7 @@ public class Modedislpay extends AppCompatActivity  implements GoogleApiClient.O
     public void checknullfields(){
         if(TextUtils.isEmpty(autoCompleteTextViewfrom.getText().toString()))
             flag=1;
-        else if(TextUtils.isEmpty(destination.toString().toString()))
+        else if(TextUtils.isEmpty(destination.toString()))
             flag=1;
         else if(TextUtils.isEmpty(name.getText().toString()))
             flag=1;
