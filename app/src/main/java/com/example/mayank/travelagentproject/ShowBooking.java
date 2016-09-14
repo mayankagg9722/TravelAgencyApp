@@ -47,10 +47,13 @@ public class ShowBooking extends AppCompatActivity {
         nobooking=(TextView)findViewById(R.id.nobooking);
         nobooking.setVisibility(View.INVISIBLE);
 
+        MainActivity.checknet(this);
+
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
-        pd.show();
-
+        if(MainActivity.connected==true) {
+            pd.show();
+        }
         recyclerView=(RecyclerView)findViewById(R.id.recyclerview);
         layoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);

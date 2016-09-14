@@ -33,7 +33,8 @@ import java.util.Date;
 
 public class FinalForm extends AppCompatActivity {
 
-    TextView travelname,travellocation,travelcontact,travelemail,userfrom,userto,username,useraddress,usercontact,useremail,pref,drop,date,time,cartype,carsize;
+    TextView travelname,travellocation,travelcontact,travelemail,userfrom,userto,username,
+            useraddress,usercontact,useremail,pref,drop,date,time,cartype,carsize;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     static  Firebase firebase;
@@ -100,6 +101,8 @@ public class FinalForm extends AppCompatActivity {
         booknow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.checknet(view.getContext());
+                if(MainActivity.connected==true)
                 showalertdialog();
             }
         });

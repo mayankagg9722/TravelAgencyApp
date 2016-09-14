@@ -33,7 +33,7 @@
                 android:layout_height="175dp"
                 android:layout_weight="4"
                 android:scaleType="fitXY"
-                android:src="@drawable/travelcards"
+                android:src="@drawable/newtravelcards"
                 android:id="@+id/ta_image" />
             <TextView
                 android:id="@+id/travelAgent_name"
@@ -41,13 +41,12 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="TRAVEL AGENT NAME"
+                android:typeface="serif"
+                android:layout_centerHorizontal="true"
                 android:textColor="#ffffff"
-                android:paddingTop="40dp"
                 android:textStyle="italic"
-                android:textSize="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:textSize="20dp"
+                android:layout_alignParentTop="true" />
         </RelativeLayout>
 
             <LinearLayout

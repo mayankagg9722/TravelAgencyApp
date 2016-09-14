@@ -90,6 +90,7 @@ public class Signup extends android.support.v4.app.Fragment {
 
         view=inflater.inflate(R.layout.fragment_signup, container, false);
 
+
         Firebase.goOnline();
         Firebase.setAndroidContext(getContext());
 

@@ -1,9 +1,13 @@
 package com.example.mayank.travelagentproject;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -75,10 +79,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     Boolean doublepress= false;
 
+    static Boolean connected=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+       checknet(this);
+
 
         Firebase.setAndroidContext(this);
         Firebase.goOnline();
@@ -90,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbar.setTitle("CAB SERVICES");
+        toolbar.setTitle("TRAP CAB");
 
         setSupportActionBar(toolbar);
 
@@ -366,5 +375,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alertBuilder.create().show();
     }
 
+    public static void checknet(Context context){
+        connected=false;
+        ConnectivityManager connectivityManager= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        if(networkInfo!=null&&networkInfo.isConnectedOrConnecting()&&networkInfo.isAvailable()){
+            connected=true;
+        }
+        else {
+            connected=false;
+            shownonetalert(context);
+        }
+    }
+
+    private static void shownonetalert(Context context) {
+        AlertDialog.Builder alert=new AlertDialog.Builder(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alert.setView(R.layout.nointernet);
+        }
+        else {
+            alert.setTitle("NO INTERNET CONNECTION");
+            alert.setMessage("Please connect to internet for best use of our services.");
+        }
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alert.create().show();
+    }
 
 }

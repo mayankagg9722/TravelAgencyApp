@@ -20,7 +20,7 @@ tools:showIn="@layout/app_bar_main">
         android:layout_centerHorizontal="true"
         android:text="Book A Cab"
         android:textStyle="italic|bold"
-        android:typeface="sans"
+        android:typeface="serif"
         android:id="@+id/text"
         />
     <android.support.v7.widget.RecyclerView

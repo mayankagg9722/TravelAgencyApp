@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fbc02d</color>
-    <color name="colorPrimaryDark">#f9a825</color>
+    <color name="colorPrimary">#ffa000</color>
+    <color name="colorPrimaryDark">#ff8f00</color>
     <color name="colorAccent">#FF4081</color>
     <color name="droplist">#ffcc5c</color>
     <color name="myactionbarcolor">#ef6c00</color>
