@@ -21,6 +21,23 @@ public class TravelAgents_POJO {
             this.tEmail=tEmail;
 //            this.picture = picture;
         }
+
+        public String gettAAddress() {
+            return tAAddress;
+        }
+
+        public String gettAName() {
+            return tAName;
+        }
+
+        public String gettAnumber() {
+            return tAnumber;
+        }
+
+        public String gettEmail() {
+            return tEmail;
+        }
+
     }
 
     public static ArrayList<TravelAgentsDetails> getDetails()   {

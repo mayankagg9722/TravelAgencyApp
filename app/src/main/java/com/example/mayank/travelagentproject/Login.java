@@ -78,7 +78,6 @@ public class Login extends android.support.v4.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         FacebookSdk.sdkInitialize(getContext());
-       // AppEventsLogger.activateApp(getContext());
         callbackManager=CallbackManager.Factory.create();
       super.onCreate(savedInstanceState);
     }

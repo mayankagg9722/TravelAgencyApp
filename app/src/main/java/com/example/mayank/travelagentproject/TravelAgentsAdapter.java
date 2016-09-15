@@ -26,9 +26,9 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
 
     Context ctx;
 
-    ArrayList<TravelAgents_POJO.TravelAgentsDetails> details;
+    ArrayList<TA_POJO> details=new ArrayList<TA_POJO>();
 
-    public TravelAgentsAdapter(ArrayList<TravelAgents_POJO.TravelAgentsDetails> details, Context ctx) {
+    public TravelAgentsAdapter(ArrayList<TA_POJO> details, Context ctx) {
         this.details = details;
         this.ctx = ctx;
     }
@@ -42,10 +42,11 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
 
     @Override
     public void onBindViewHolder(DetailsViewHolder holder, int position) {
-        TravelAgents_POJO.TravelAgentsDetails mDetails = details.get(position);
-        holder.taName.setText(mDetails.tAName);
-        holder.taLocation.setText(mDetails.tAAddress);
-        holder.taLocation.setSelected(true);
+        TA_POJO mDetails = details.get(position);
+
+        holder.name.setText(mDetails.getName());
+        holder.location.setText(mDetails.getLocation());
+        holder.location.setSelected(true);
     }
 
     @Override
@@ -56,19 +57,19 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
     public static class DetailsViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img;
-        TextView taName, taLocation;
+        TextView name,location;
         Context ctx;
         LinearLayout linearLayout;
 
-        ArrayList<TravelAgents_POJO.TravelAgentsDetails> details = TravelAgents_POJO.getDetails();
+        ArrayList<TA_POJO> details ;
 
-        public DetailsViewHolder(View view, final ArrayList<TravelAgents_POJO.TravelAgentsDetails> details, final Context ctx) {
+        public DetailsViewHolder(View view, final ArrayList<TA_POJO> details, final Context ctx) {
             super(view);
             this.details = details;
             this.ctx = ctx;
             img = (ImageView) view.findViewById(R.id.ta_image);
-            taName = (TextView) view.findViewById(R.id.travelAgent_name);
-            taLocation = (TextView) view.findViewById(R.id.ta_location);
+            name = (TextView) view.findViewById(R.id.travelAgent_name);
+            location = (TextView) view.findViewById(R.id.ta_location);
             linearLayout=(LinearLayout)view.findViewById(R.id.linearlayout);
 
             view.setClickable(true);
@@ -79,13 +80,13 @@ public class TravelAgentsAdapter extends RecyclerView.Adapter<TravelAgentsAdapte
                 @Override
                 public void onClick(View view) {
                     int position=getAdapterPosition();
-                    TravelAgents_POJO.TravelAgentsDetails obj=details.get(position);
+                    TA_POJO obj=details.get(position);
                     Intent intent=new Intent(ctx,FinalForm.class);
                     Bundle bundle=TravelAgents.bundle;
-                    bundle.putString("agentname",obj.tAName);
-                    bundle.putString("agentaddress",obj.tAAddress);
-                    bundle.putString("agentcontact",obj.tAnumber);
-                    bundle.putString("agentemail",obj.tEmail);
+                    bundle.putString("agentname",obj.getName());
+                    bundle.putString("agentaddress",obj.getLocation());
+                    bundle.putString("agentcontact",obj.getNumber());
+                    bundle.putString("agentemail",obj.getEmail());
                     intent.putExtras(bundle);
                     ctx.startActivity(intent);
 

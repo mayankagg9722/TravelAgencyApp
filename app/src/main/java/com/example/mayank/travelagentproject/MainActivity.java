@@ -56,7 +56,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     RecyclerView recyclerView;
@@ -247,8 +246,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
         else if(id==R.id.confirmation){
-            Intent intent=new Intent(this,TravelConfirmation.class);
-            startActivity(intent);
+            if(firebaseAuth.getCurrentUser()==null){
+                Toast.makeText(MainActivity.this, "Please Sign In First", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent intent = new Intent(this, TravelConfirmation.class);
+                startActivity(intent);
+            }
+        }
+        else if(id==R.id.registration){
+            if(firebaseAuth.getCurrentUser()==null){
+                Toast.makeText(MainActivity.this, "Please Sign In First", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                    Intent intent = new Intent(this, RegisterTA.class);
+                    startActivity(intent);
+            }
         }
         else if(id == R.id.nav_logout){
             if(user!= null){
@@ -257,7 +270,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navemail.setText("No Email,Register To Our App.");
                 toolbar.setTitle("Guest");
                 firebaseAuth.signOut();
-
 
                  Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
                     @Override

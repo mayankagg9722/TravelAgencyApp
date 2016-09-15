@@ -72,7 +72,7 @@ public class ModeAdapter extends RecyclerView.Adapter<ModeAdapter.MyViewHolder> 
                 ModeTransport modeTransport = this.list.get(position);
 
                 if(modeTransport.getName().equals("Locale")) {
-                    Intent intent = new Intent(ctx, Locale.class);
+                    Intent intent = new Intent(ctx,Locale.class);
                     ctx.startActivity(intent);
                 }
                 else {

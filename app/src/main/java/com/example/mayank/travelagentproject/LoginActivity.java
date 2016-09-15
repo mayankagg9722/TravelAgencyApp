@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Login/SignUp");
         setSupportActionBar(toolbar);

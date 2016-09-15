@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="Users">
+        <menu>
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/registeruser"
             android:icon="@drawable/travelagent"
-            android:title="Registered User" />
+            android:title="Login" />
         <item
             android:id="@+id/booking"
             android:icon="@drawable/booking"
@@ -16,14 +18,21 @@
             android:title="Linked States and Cities" />
 
     </group>
+    </menu>
+    </item>
 
     <item android:title="Travel Agents">
     <menu>
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/registertravelagent"
+            android:icon="@drawable/travelagent"
+            android:title="Login" />
+
+        <item
+            android:id="@+id/registration"
             android:icon="@drawable/user"
-            android:title="Registered Travel Agent" />
+            android:title="Register Agency" />
 
         <item
             android:id="@+id/confirmation"
