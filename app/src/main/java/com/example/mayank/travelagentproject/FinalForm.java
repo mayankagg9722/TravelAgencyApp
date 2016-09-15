@@ -4,21 +4,27 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +33,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,7 +42,7 @@ import java.util.Date;
 public class FinalForm extends AppCompatActivity {
 
     TextView travelname,travellocation,travelcontact,travelemail,userfrom,userto,username,
-            useraddress,usercontact,useremail,pref,drop,date,time,cartype,carsize;
+            useraddress,usercontact,useremail,pref,drop,date,time,cartype,carsize,price;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     static  Firebase firebase;
@@ -42,6 +50,9 @@ public class FinalForm extends AppCompatActivity {
     Button booknow;
     String bookingid;
     String currentdate;
+    ImageView shop,pamphlet;
+    String priceentered;
+    String imgoneurl,imgtwourl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,9 @@ public class FinalForm extends AppCompatActivity {
         cartype=(TextView)findViewById(R.id.usercartype);
         carsize=(TextView)findViewById(R.id.usercarsize);
 
+        shop=(ImageView)findViewById(R.id.ta_shop);
+        pamphlet=(ImageView)findViewById(R.id.pamphlet);
+        price=(TextView)findViewById(R.id.price);
 
         Bundle bundle=getIntent().getExtras();
 
@@ -91,6 +105,53 @@ public class FinalForm extends AppCompatActivity {
         time.setText(bundle.getString("time"));
         cartype.setText(bundle.getString("cartype"));
         carsize.setText(bundle.getString("carsize"));
+
+        imgoneurl=bundle.getString("imgone");
+        imgtwourl=bundle.getString("imgtwo");
+
+        priceentered=bundle.getString("price");
+
+        if (priceentered.equals("null")) {
+            price.setText("Not Available!");
+        }
+        else{
+         price.setText("INR "+priceentered);
+        }
+
+        StorageReference storageReference= FirebaseStorage.getInstance().getReferenceFromUrl(imgoneurl);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                shop.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(FinalForm.this,"Error..uploading images",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        if(!(imgtwourl.equals("null"))){
+            StorageReference storage= FirebaseStorage.getInstance().getReferenceFromUrl(imgtwourl);
+            final long MEGABYTE = 1024 * 1024;
+            storage.getBytes(MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                    pamphlet.setImageBitmap(bitmap);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(FinalForm.this,"Error..uploading images",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
 
         Firebase.setAndroidContext(this);
         firebase=new Firebase("https://travelagentproject-40e3a.firebaseio.com/");

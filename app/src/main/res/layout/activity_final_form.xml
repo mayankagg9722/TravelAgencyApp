@@ -14,7 +14,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="222dp"
+            android:layout_height="wrap_content"
             android:layout_margin="3dp"
             app:cardCornerRadius="8dp">
 
@@ -24,12 +24,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:scaleType="fitXY"
-                    android:src="@drawable/newjai"
-                    android:id="@+id/ta_image" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_sync_problem_black_24dp"
+                    android:id="@+id/ta_shop" />
 
                 <TextView
                     android:id="@+id/travelagentname"
@@ -521,7 +522,7 @@
                     android:layout_height="3dp"
                     android:background="@android:color/darker_gray" />
 
-                <LinearLayout
+          <!--      <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -628,6 +629,40 @@
                         android:text="INR 0.00" />
 
                 </LinearLayout>
+-->
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="#fffde7"
+                    app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="PAMPHLET"
+                        android:textAppearance="?android:textAppearanceLarge" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_not_interested_black_24dp"
+                        android:id="@+id/pamphlet"
+                        />
+                </LinearLayout></android.support.v7.widget.CardView>
 
                 <View
                     android:layout_width="match_parent"
@@ -647,7 +682,7 @@
                         android:padding="5dp"
                         android:textColor="#FFA500"
                         android:textAppearance="?android:textAppearanceLarge"
-                        android:text="TOTAL"
+                        android:text="Per km price:"
                         android:textSize="28dp"/>
 
                     <TextView
@@ -658,8 +693,9 @@
                         android:layout_height="match_parent"
                         android:textColor="#FFA500"
                         android:padding="5dp"
-                        android:text="INR 2106.00"
-                        android:textSize="28dp"/>
+                        android:text="Not Availabel"
+                        android:textSize="28dp"
+                        android:id="@+id/price"/>
 
                 </LinearLayout>
 

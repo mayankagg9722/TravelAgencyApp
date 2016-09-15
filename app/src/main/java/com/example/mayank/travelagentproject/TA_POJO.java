@@ -9,15 +9,27 @@ public class TA_POJO {
     String number;
     String location;
     String price;
+    String imgoneurl;
+    String imgtwourl;
 
     public TA_POJO(){}
 
-    public TA_POJO(String name, String location, String number, String email, String price) {
+    public TA_POJO(String name, String location, String number, String email, String price,String imgoneurl,String imgtwourl) {
         this.name = name;
         this.location = location;
         this.number = number;
         this.email = email;
         this.price = price;
+        this.imgoneurl=imgoneurl;
+        this.imgtwourl=imgtwourl;
+    }
+
+    public String getImgoneurl() {
+        return imgoneurl;
+    }
+
+    public String getImgtwourl() {
+        return imgtwourl;
     }
 
     public String getEmail() {

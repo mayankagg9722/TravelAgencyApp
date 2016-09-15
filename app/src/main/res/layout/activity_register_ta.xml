@@ -118,7 +118,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-            <ImageButton
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_camera_alt_black_24dp"
@@ -127,7 +127,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"/>
 
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_cancel_black_18dp"
@@ -135,6 +135,7 @@
                     android:id="@+id/cancelone"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     />
 </LinearLayout>
 </LinearLayout>
@@ -146,7 +147,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pamphlet:"
+                    android:text="Pamphlet:\n(optional)"
                     android:textSize="20dp"
                     android:textColor="#000000" />
 
@@ -154,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -162,14 +163,15 @@
                     android:background="#ffffff"
                     android:layout_weight="1"
                     android:id="@+id/imgtwo"/>
-                <ImageButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_cancel_black_18dp"
                     android:background="#ffffff"
                     android:layout_weight="1"
                     android:id="@+id/canceltwo"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:visibility="invisible"/>
                 </LinearLayout>
             </LinearLayout>
     </LinearLayout>
