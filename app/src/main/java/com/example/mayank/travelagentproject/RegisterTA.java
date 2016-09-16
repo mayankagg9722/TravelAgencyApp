@@ -48,7 +48,9 @@ public class RegisterTA extends AppCompatActivity {
     private int IMGONE=1;
     private int IMGTWO=2;
 
-    String imgonedwnld,imgtwodwnld;
+    String imgonedwnld;
+    String imgtwodwnld="null";
+    Uri imgurione=null,imguritwo=null;
     StorageReference storageReference;
     ProgressDialog progressDialog;
 
@@ -56,6 +58,10 @@ public class RegisterTA extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_ta);
+
+        imgtwodwnld="null";
+        imgurione=null;
+        imguritwo=null;
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDefaultDisplayHomeAsUpEnabled(true);
@@ -158,16 +164,21 @@ public class RegisterTA extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flag = 0;
-                checknullfields();
-                if (flag == 0) {
-                    MainActivity.checknet(view.getContext());
-                    if (MainActivity.connected == true) {
-                        showalertbox();
+                if (imgurione != null) {
+                    flag = 0;
+                    checknullfields();
+
+                    if (flag == 0) {
+                        MainActivity.checknet(view.getContext());
+                        if (MainActivity.connected == true) {
+                            showalertbox();
+                        }
+                    } else {
+                        Toast.makeText(RegisterTA.this, "Fill Completely..", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else {
-                    Toast.makeText(RegisterTA.this, "Fill Completely..", Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(RegisterTA.this, "Upload images..", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -216,19 +227,18 @@ public class RegisterTA extends AppCompatActivity {
     }
 
     public void checknullfields(){
-        if(TextUtils.isEmpty(name.getText().toString()))
+        flag=0;
+        if(TextUtils.isEmpty(name.getText()))
             flag=1;
-        else if(TextUtils.isEmpty(location.toString().toString()))
+        else if(TextUtils.isEmpty(location.getText()))
             flag=1;
-        else if(TextUtils.isEmpty(phone.getText().toString()))
+        else if(TextUtils.isEmpty(phone.getText()))
             flag=1;
-        else if(TextUtils.isEmpty(email.getText().toString()))
+        else if(TextUtils.isEmpty(email.getText()))
             flag=1;
-        else if(TextUtils.isEmpty(price.getText().toString()))
+        else if(TextUtils.isEmpty(price.getText()))
             price.setText("null");
-        else if(TextUtils.isEmpty(imgonedwnld))
-            flag=1;
-        else if(TextUtils.isEmpty(imgtwodwnld))
+        else if(imguritwo==null)
             imgtwodwnld="null";
     }
 
@@ -277,12 +287,14 @@ public class RegisterTA extends AppCompatActivity {
                     if(number==1) {
                         imgone.setImageURI(uri);
                         imgonedwnld = taskSnapshot.getDownloadUrl().toString();
+                        imgurione=taskSnapshot.getDownloadUrl();
                         cancelone.setVisibility(View.VISIBLE);
                         cancelone.setClickable(true);
                     }
                     else if(number==2){
                         imgtwo.setImageURI(uri);
                         imgtwodwnld = taskSnapshot.getDownloadUrl().toString();
+                        imguritwo=taskSnapshot.getDownloadUrl();
                         canceltwo.setVisibility(View.VISIBLE);
                         canceltwo.setClickable(true);
                     }
